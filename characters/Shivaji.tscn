@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://xqrbyiwht3e5"]
+
+[ext_resource type="Script" path="res://scripts/characters/Player.gd" id="1_vx8k4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(32, 48)
+
+[node name="Shivaji" type="CharacterBody2D"]
+script = ExtResource("1_vx8k4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.8, 0.6, 0.4, 1)
+
+[node name="PlaceholderSprite" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 24.0
+color = Color(0.8, 0.4, 0.2, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_1")

@@ -1,0 +1,216 @@
+[gd_scene load_steps=9 format=3 uid="uid://c7qn8dxjqyxn4"]
+
+[ext_resource type="Script" path="res://scripts/levels/Level01_ShadowOfAfzal.gd" id="1_abcde"]
+[ext_resource type="PackedScene" uid="uid://chqn8dxjqyxn2" path="res://characters/Shivaji.tscn" id="2_bcdef"]
+[ext_resource type="PackedScene" uid="uid://dhqn8dxjqyxn1" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="3_cdefg"]
+[ext_resource type="Script" path="res://scripts/ui/ObjectivesUI.gd" id="4_defgh"]
+[ext_resource type="Script" path="res://scripts/ui/LevelCompleteUI.gd" id="5_efghi"]
+[ext_resource type="Script" path="res://scripts/systems/PlatformerCamera.gd" id="6_fghij"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ground"]
+size = Vector2(1200, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_walls"]
+size = Vector2(50, 600)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(200, 40)
+
+[node name="Level01_ShadowOfAfzal" type="Node2D"]
+script = ExtResource("1_abcde")
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="Environment"]
+position = Vector2(600, 550)
+
+[node name="GroundSprite" type="ColorRect" parent="Environment/Ground"]
+offset_left = -600.0
+offset_top = -50.0
+offset_right = 600.0
+offset_bottom = 50.0
+color = Color(0.4, 0.6, 0.2, 1)
+
+[node name="GroundCollision" type="CollisionShape2D" parent="Environment/Ground"]
+shape = SubResource("RectangleShape2D_ground")
+
+[node name="Platform1" type="StaticBody2D" parent="Environment"]
+position = Vector2(300, 420)
+
+[node name="Platform1Sprite" type="ColorRect" parent="Environment/Platform1"]
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+color = Color(0.7, 0.6, 0.4, 1)
+
+[node name="Platform1Collision" type="CollisionShape2D" parent="Environment/Platform1"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Platform2" type="StaticBody2D" parent="Environment"]
+position = Vector2(600, 320)
+
+[node name="Platform2Sprite" type="ColorRect" parent="Environment/Platform2"]
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+color = Color(0.7, 0.6, 0.4, 1)
+
+[node name="Platform2Collision" type="CollisionShape2D" parent="Environment/Platform2"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="Platform3" type="StaticBody2D" parent="Environment"]
+position = Vector2(900, 220)
+
+[node name="Platform3Sprite" type="ColorRect" parent="Environment/Platform3"]
+offset_left = -100.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+color = Color(0.7, 0.6, 0.4, 1)
+
+[node name="Platform3Collision" type="CollisionShape2D" parent="Environment/Platform3"]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="LeftWall" type="StaticBody2D" parent="Environment"]
+position = Vector2(25, 300)
+
+[node name="WallSprite" type="ColorRect" parent="Environment/LeftWall"]
+offset_left = -25.0
+offset_top = -300.0
+offset_right = 25.0
+offset_bottom = 300.0
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="WallCollision" type="CollisionShape2D" parent="Environment/LeftWall"]
+shape = SubResource("RectangleShape2D_walls")
+
+[node name="RightWall" type="StaticBody2D" parent="Environment"]
+position = Vector2(1175, 300)
+
+[node name="WallSprite2" type="ColorRect" parent="Environment/RightWall"]
+offset_left = -25.0
+offset_top = -300.0
+offset_right = 25.0
+offset_bottom = 300.0
+color = Color(0.6, 0.4, 0.2, 1)
+
+[node name="WallCollision2" type="CollisionShape2D" parent="Environment/RightWall"]
+shape = SubResource("RectangleShape2D_walls")
+
+[node name="Player" parent="." instance=ExtResource("2_bcdef")]
+position = Vector2(100, 500)
+
+[node name="PlatformerCamera" type="Camera2D" parent="."]
+position = Vector2(100, 300)
+enabled = true
+limit_left = 0
+limit_top = 50
+limit_right = 1200
+limit_bottom = 600
+editor_draw_limits = true
+script = ExtResource("6_fghij")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ObjectivesUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("4_defgh")
+
+[node name="Panel" type="Panel" parent="UI/ObjectivesUI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 200.0
+
+[node name="VBox" type="VBoxContainer" parent="UI/ObjectivesUI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="TitleLabel" type="Label" parent="UI/ObjectivesUI/Panel/VBox"]
+layout_mode = 2
+text = "Objectives"
+horizontal_alignment = 1
+
+[node name="ObjectivesList" type="VBoxContainer" parent="UI/ObjectivesUI/Panel/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DialogueUI" parent="UI" instance=ExtResource("3_cdefg")]
+
+[node name="LevelCompleteUI" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("5_efghi")
+
+[node name="Panel" type="Panel" parent="UI/LevelCompleteUI"]
+layout_mode = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+
+[node name="VBox" type="VBoxContainer" parent="UI/LevelCompleteUI/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+
+[node name="LevelTitle" type="Label" parent="UI/LevelCompleteUI/Panel/VBox"]
+layout_mode = 2
+text = "Level Complete!"
+horizontal_alignment = 1
+
+[node name="CompletionText" type="Label" parent="UI/LevelCompleteUI/Panel/VBox"]
+layout_mode = 2
+text = "Well done!"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="CardSection" type="VBoxContainer" parent="UI/LevelCompleteUI/Panel/VBox"]
+layout_mode = 2
+
+[node name="CardTitle" type="Label" parent="UI/LevelCompleteUI/Panel/VBox/CardSection"]
+layout_mode = 2
+text = "Shivkaari Card Unlocked!"
+horizontal_alignment = 1
+
+[node name="CardDescription" type="Label" parent="UI/LevelCompleteUI/Panel/VBox/CardSection"]
+layout_mode = 2
+text = "Card description here"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ButtonSection" type="HBoxContainer" parent="UI/LevelCompleteUI/Panel/VBox"]
+layout_mode = 2
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="UI/LevelCompleteUI/Panel/VBox/ButtonSection"]
+layout_mode = 2
+text = "Continue"
+
+[node name="MenuButton" type="Button" parent="UI/LevelCompleteUI/Panel/VBox/ButtonSection"]
+layout_mode = 2
+text = "Main Menu" 

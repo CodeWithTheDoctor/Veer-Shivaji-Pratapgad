@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfvdxjxkqyxn3"]
+
+[ext_resource type="Script" path="res://scripts/characters/NPC.gd" id="1_jqxl7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bqxl7"]
+radius = 50.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_collision"]
+size = Vector2(32, 48)
+
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_jqxl7")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_collision")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="DetectionShape" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_bqxl7")
+
+[node name="InteractionPrompt" type="Label" parent="."]
+offset_left = -40.0
+offset_top = -70.0
+offset_right = 40.0
+offset_bottom = -50.0
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "Press E to talk"
+horizontal_alignment = 1
+z_index = 100 

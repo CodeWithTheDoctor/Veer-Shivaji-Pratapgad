@@ -1,0 +1,180 @@
+{
+    "test_dialogue": [
+        {
+            "speaker": "Narrator",
+            "text": "Welcome to Veer Shivaji: Pratapgad Campaign! This is a test of the dialogue system."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Har Har Mahadev! I am Chhatrapati Shivaji Maharaj, ready to defend the Maratha realm!"
+        },
+        {
+            "speaker": "Narrator",
+            "text": "The dialogue system is working perfectly. Press E or Space to advance through conversations."
+        }
+    ],
+    "level01_opening": [
+        {
+            "speaker": "Narrator",
+            "text": "In May 1659, the shadow of war fell across the Deccan plateau..."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "In the grand court of Bijapur, Adil Shah sat upon his throne, his mind troubled by reports from the southern provinces."
+        },
+        {
+            "speaker": "Adil Shah",
+            "text": "This Shivaji has become a thorn in our side. His raids on our territories grow bolder each day."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "The Sultan's eyes fell upon his most trusted general, a man of imposing stature and fearsome reputation."
+        },
+        {
+            "speaker": "Adil Shah",
+            "text": "Afzal Khan, you are my finest general. I entrust you with this crucial mission."
+        },
+        {
+            "speaker": "Afzal Khan",
+            "text": "My lord, I shall bring you Shivaji's head within a month. The Maratha whelp will learn to fear the might of Bijapur!"
+        },
+        {
+            "speaker": "Narrator",
+            "text": "And so began the campaign that would change the course of Maratha history..."
+        }
+    ],
+    "level01_temple_destruction": [
+        {
+            "speaker": "Narrator",
+            "text": "As Afzal Khan's army marched through the Konkan, they left a trail of destruction in their wake."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "Sacred temples were desecrated, villages burned, and innocent people fled in terror."
+        },
+        {
+            "speaker": "Villager",
+            "text": "The demon Afzal Khan approaches! He destroys everything holy in his path!"
+        },
+        {
+            "speaker": "Narrator",
+            "text": "Hidden in the shadows, Shivaji's spies observed the destruction, their hearts heavy with sorrow and anger."
+        },
+        {
+            "speaker": "Spy",
+            "text": "We must report this to Shivaji Maharaj immediately. The people need protection."
+        }
+    ],
+    "level01_advisor_consultation": [
+        {
+            "speaker": "Narrator",
+            "text": "At Raigad Fort, Shivaji received the disturbing reports from his network of spies and allies."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Afzal Khan's cruelty knows no bounds. He seeks to terrorize our people into submission."
+        },
+        {
+            "speaker": "Advisor",
+            "text": "Maharaj, his army is vast - nearly 40,000 strong. A direct confrontation would be suicide."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Sometimes, my friend, the mightiest enemy can be defeated not by matching their strength, but by using their overconfidence against them."
+        },
+        {
+            "speaker": "Advisor",
+            "text": "Your wisdom guides us, Raje. What strategy do you propose?"
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "First, we must understand our enemy completely. Send our best spies to infiltrate his camp. Information will be our greatest weapon."
+        }
+    ],
+    "level01_intelligence_gathering": [
+        {
+            "speaker": "Narrator",
+            "text": "Word came from the merchants and barbers who had been serving in Afzal Khan's camp."
+        },
+        {
+            "speaker": "Spy Merchant",
+            "text": "Maharaj, Afzal Khan is arrogant beyond measure. He boasts that he will hang your head from the gates of Bijapur."
+        },
+        {
+            "speaker": "Spy Barber",
+            "text": "The giant is strong, but his pride is his weakness. He underestimates you completely."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Pride goeth before a fall, they say. His arrogance will be the key to our victory."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "With each piece of intelligence, Shivaji began to formulate a plan that would use Afzal Khan's own confidence against him."
+        }
+    ],
+    "level01_netaji_consultation": [
+        {
+            "speaker": "Netaji Palkar",
+            "text": "Jai Bhavani, Shivaji Raje! I have been waiting for your orders."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Netaji, Afzal Khan approaches with a vast army. What is your assessment?"
+        },
+        {
+            "speaker": "Netaji Palkar",
+            "text": "The enemy's strength lies in numbers, but his weakness lies in arrogance. We must use the terrain to our advantage."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Indeed. Prepare our forces, but do not engage until I give the word. This battle will be won with strategy, not just swords."
+        },
+        {
+            "speaker": "Netaji Palkar",
+            "text": "As you command, Raje. The Mavlas are ready to give their lives for Swarajya!"
+        }
+    ],
+    "level01_completion": [
+        {
+            "speaker": "Narrator",
+            "text": "As the sun set over Raigad, Shivaji stood on the ramparts, gazing toward the enemy forces below."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Knowledge is power, and patience is strength. We now understand our enemy's mind."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "The first phase of the campaign was complete. Shivaji had gathered crucial intelligence about Afzal Khan's nature and capabilities."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "Now, the real strategy could begin..."
+        }
+    ],
+    "intro_dialogue": [
+        {
+            "speaker": "Narrator",
+            "text": "In the year 1659, the shadow of war fell across the Deccan plateau..."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "Afzal Khan, the mighty general of the Adilshahi sultanate, had been tasked with a single mission..."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "To capture or kill the young Maratha chief, Shivaji Bhosale."
+        }
+    ],
+    "shivaji_greeting": [
+        {
+            "speaker": "Shivaji",
+            "text": "Namaste. I am Shivaji, protector of the people and defender of dharma."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "These are troubled times, but with courage and wisdom, we shall prevail."
+        }
+    ]
+}

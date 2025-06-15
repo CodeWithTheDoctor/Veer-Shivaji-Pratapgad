@@ -1,0 +1,85 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjm7qhkwxhxm6"]
+
+[ext_resource type="Script" uid="uid://qipguhnbxm25" path="res://scenes/main_menu/MainMenu.gd" id="1_5hxm4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1sxp4"]
+font_size = 48
+font_color = Color(0.8, 0.6, 0.2, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5hxm4")
+
+[node name="BackgroundContainer" type="Panel" parent="."]
+self_modulate = Color(0.2, 0.15, 0.1, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -250.0
+offset_right = 200.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="TitleContainer"]
+layout_mode = 2
+text = "VEER SHIVAJI"
+label_settings = SubResource("LabelSettings_1sxp4")
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="TitleContainer"]
+layout_mode = 2
+text = "Pratapgad Campaign"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="TitleContainer"]
+layout_mode = 2
+
+[node name="MenuContainer" type="VBoxContainer" parent="TitleContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="StartButton" type="Button" parent="TitleContainer/MenuContainer"]
+layout_mode = 2
+text = "Start New Game"
+
+[node name="ContinueButton" type="Button" parent="TitleContainer/MenuContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="CardsButton" type="Button" parent="TitleContainer/MenuContainer"]
+layout_mode = 2
+text = "Shivkaari Cards"
+
+[node name="SettingsButton" type="Button" parent="TitleContainer/MenuContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="TitleContainer/MenuContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="TitleContainer/MenuContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="TitleAnimation" type="AnimationPlayer" parent="."]
+
+[node name="BackgroundAnimation" type="AnimationPlayer" parent="."]

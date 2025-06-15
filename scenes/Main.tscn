@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://badd4g83okrgw"]
+
+[ext_resource type="PackedScene" uid="uid://xqrbyiwht3e5" path="res://characters/Shivaji.tscn" id="1_4lsyj"]
+[ext_resource type="PackedScene" uid="uid://cnav6fk1vrvps" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="2_wqlt1"]
+[ext_resource type="Script" uid="uid://cfuom420lee3h" path="res://scripts/systems/MainScene.gd" id="3_xmv4f"]
+[ext_resource type="Script" uid="uid://c0la4ni1hngtk" path="res://scripts/systems/SystemTester.gd" id="4_test"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("3_xmv4f")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1024.0
+offset_bottom = 600.0
+color = Color(0.3, 0.6, 0.3, 1)
+
+[node name="SystemTester" type="Node" parent="."]
+script = ExtResource("4_test")
+
+[node name="Player" parent="." instance=ExtResource("1_4lsyj")]
+position = Vector2(400, 300)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(2, 2)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="DialogueUI" parent="UI" instance=ExtResource("2_wqlt1")]
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TestLabel" type="Label" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -150.0
+offset_right = 500.0
+offset_bottom = -20.0
+theme_override_font_sizes/font_size = 16
+text = "Veer Shivaji: Pratapgad Campaign - TESTING SCENE
+
+WASD/Arrow Keys: Move the brown rectangle (Shivaji)
+E/Space: Interact (shows in console)
+T + Space: Test Dialogue System
+ESC: Return to Main Menu
+
+If you can see this text and a green background,
+the scene is working! Check the console for system messages."
+
+[node name="BackButton" type="Button" parent="UI"]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 50.0
+text = "Main Menu"

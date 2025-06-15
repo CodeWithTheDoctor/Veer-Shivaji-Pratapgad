@@ -1,0 +1,118 @@
+{
+    "level_01": {
+        "name": "The Shadow of Afzal Khan",
+        "description": "Witness the beginning of Afzal Khan's campaign and Shivaji's strategic intelligence gathering",
+        "objectives": [
+            {
+                "id": "learn_threat",
+                "text": "Learn about the threat (speak with Royal Advisor)",
+                "completed": false,
+                "trigger_type": "npc_interaction",
+                "trigger_id": "advisor"
+            },
+            {
+                "id": "gather_intelligence",
+                "text": "Gather intelligence (speak with Spy Merchant)",
+                "completed": false,
+                "trigger_type": "npc_interaction",
+                "trigger_id": "spy_merchant"
+            },
+            {
+                "id": "consult_netaji",
+                "text": "Consult with Netaji (speak with Sarnaubat)",
+                "completed": false,
+                "trigger_type": "npc_interaction",
+                "trigger_id": "netaji_palkar"
+            }
+        ],
+        "npcs": [
+            {
+                "id": "advisor",
+                "name": "Royal Advisor",
+                "position": {
+                    "x": 300,
+                    "y": 370
+                },
+                "dialogue_id": "level01_advisor_consultation",
+                "interaction_text": "Press E to speak with advisor"
+            },
+            {
+                "id": "spy_merchant",
+                "name": "Spy Merchant",
+                "position": {
+                    "x": 600,
+                    "y": 270
+                },
+                "dialogue_id": "level01_intelligence_gathering",
+                "interaction_text": "Press E to hear intelligence report"
+            },
+            {
+                "id": "netaji_palkar",
+                "name": "Netaji Palkar",
+                "position": {
+                    "x": 900,
+                    "y": 170
+                },
+                "dialogue_id": "level01_netaji_consultation",
+                "interaction_text": "Press E to speak with Sarnaubat"
+            }
+        ],
+        "cutscenes": [
+            {
+                "id": "bijapur_court",
+                "dialogue_id": "level01_opening",
+                "trigger": "level_start",
+                "auto_play": true
+            },
+            {
+                "id": "temple_destruction",
+                "dialogue_id": "level01_temple_destruction",
+                "trigger": "area_entered",
+                "area_id": "temple_area"
+            },
+            {
+                "id": "level_completion",
+                "dialogue_id": "level01_completion",
+                "trigger": "all_objectives_complete",
+                "auto_play": true
+            }
+        ],
+        "areas": [
+            {
+                "id": "temple_area",
+                "name": "Destroyed Temple",
+                "position": {
+                    "x": 200,
+                    "y": 500
+                },
+                "size": {
+                    "width": 150,
+                    "height": 100
+                }
+            },
+            {
+                "id": "raigad_entrance",
+                "name": "Raigad Fort Entrance",
+                "position": {
+                    "x": 850,
+                    "y": 150
+                },
+                "size": {
+                    "width": 200,
+                    "height": 150
+                }
+            }
+        ],
+        "completion_reward": {
+            "shivkaari_card": {
+                "title": "Understanding the Enemy",
+                "description": "Shivaji's wisdom in gathering intelligence before acting",
+                "historical_value": "Information is the foundation of strategy",
+                "detailed_explanation": "Before facing Afzal Khan, Shivaji spent months gathering intelligence through spies disguised as merchants, barbers, and helpers. This careful preparation was key to his victory.",
+                "related_character": "Chhatrapati Shivaji Maharaj",
+                "unlock_level": 1
+            }
+        },
+        "next_level": "level_02"
+    }
+}

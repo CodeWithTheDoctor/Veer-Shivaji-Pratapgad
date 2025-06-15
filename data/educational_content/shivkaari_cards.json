@@ -1,0 +1,116 @@
+{
+    "shivkaari_cards": [
+        {
+            "id": "understanding_enemy",
+            "title": "Understanding the Enemy",
+            "description": "Shivaji's wisdom in gathering intelligence before acting",
+            "historical_value": "Information is the foundation of strategy",
+            "detailed_explanation": "Before facing Afzal Khan, Shivaji spent months gathering intelligence through spies disguised as merchants, barbers, and helpers. This careful preparation was key to his victory. His network of informants provided crucial details about Afzal Khan's personality, weaknesses, and battle tactics.",
+            "related_character": "Chhatrapati Shivaji Maharaj",
+            "unlock_level": 1,
+            "category": "Strategy"
+        },
+        {
+            "id": "strategic_preparation",
+            "title": "Strategic Preparation",
+            "description": "The importance of proper planning and resource management",
+            "historical_value": "Success favors the prepared mind",
+            "detailed_explanation": "Shivaji ensured all forts were well-stocked with supplies and weapons. He commissioned special weapons including the famous waagh-nakha for the encounter. Every detail was planned, from escape routes to signal systems.",
+            "related_character": "Chhatrapati Shivaji Maharaj",
+            "unlock_level": 2,
+            "category": "Preparation"
+        },
+        {
+            "id": "choosing_battlefield",
+            "title": "Choosing the Battlefield",
+            "description": "Selecting advantageous terrain for conflict",
+            "historical_value": "The wise leader fights on terms of their choosing",
+            "detailed_explanation": "By luring Afzal Khan to the hilly Javali valley, Shivaji neutralized the advantage of the enemy's superior cavalry and fought on familiar terrain. The Sahyadri mountains provided natural fortification and escape routes.",
+            "related_character": "Chhatrapati Shivaji Maharaj",
+            "unlock_level": 3,
+            "category": "Tactics"
+        },
+        {
+            "id": "diplomatic_deception",
+            "title": "Diplomatic Deception",
+            "description": "Using cunning and psychology in negotiations",
+            "historical_value": "Sometimes strategy requires appearing weaker than you are",
+            "detailed_explanation": "Shivaji's humble response to Afzal Khan's demands, sent through Gopinath Bokil, lulled the enemy into overconfidence while setting up the perfect trap. This psychological warfare was as important as physical preparation.",
+            "related_character": "Gopinath Bokil",
+            "unlock_level": 4,
+            "category": "Diplomacy"
+        },
+        {
+            "id": "loyal_companions",
+            "title": "Loyalty and Trust",
+            "description": "The bond between a leader and faithful companions",
+            "historical_value": "True strength lies in trusted allies",
+            "detailed_explanation": "Jiva Mahalya's instant response to protect Shivaji during the encounter shows the loyalty that great leaders inspire. 'Hota Jiva mhanoon vachla Shiva' became a famous saying celebrating this loyalty.",
+            "related_character": "Jiva Mahalya",
+            "unlock_level": 6,
+            "category": "Leadership"
+        },
+        {
+            "id": "courage_in_crisis",
+            "title": "Courage in Crisis",
+            "description": "Maintaining composure under extreme pressure",
+            "historical_value": "True courage is grace under pressure",
+            "detailed_explanation": "Despite facing a much larger and stronger opponent in close combat, Shivaji remained calm and executed his plan perfectly, showing no fear to Afzal Khan. This mental strength was crucial to his victory.",
+            "related_character": "Chhatrapati Shivaji Maharaj",
+            "unlock_level": 6,
+            "category": "Character"
+        },
+        {
+            "id": "swift_victory",
+            "title": "Swift Victory",
+            "description": "The importance of decisive action when opportunity arises",
+            "historical_value": "Strike decisively when the moment is right",
+            "detailed_explanation": "The coordinated attack following the trumpet signals showed perfect timing and execution, turning a diplomatic meeting into a complete military victory. Every warrior knew their role and executed it flawlessly.",
+            "related_character": "Maratha Warriors",
+            "unlock_level": 7,
+            "category": "Execution"
+        },
+        {
+            "id": "compassionate_leadership",
+            "title": "Compassionate Leadership",
+            "description": "Showing mercy and honor even in victory",
+            "historical_value": "True leaders show strength through compassion",
+            "detailed_explanation": "After his victory, Shivaji showed respect for the fallen and concern for his people, demonstrating that great leaders fight to protect, not to destroy. This won him respect even from his enemies.",
+            "related_character": "Chhatrapati Shivaji Maharaj",
+            "unlock_level": 8,
+            "category": "Leadership"
+        }
+    ],
+    "historical_terms": {
+        "jagir": {
+            "term": "Jagir",
+            "definition": "A feudal land grant given by rulers to nobles in exchange for military service",
+            "context": "Shivaji's jagir was the territory granted to the Bhosale family by the Adilshahi sultanate"
+        },
+        "sarnaubat": {
+            "term": "Sarnaubat",
+            "definition": "Commander-in-chief of the Maratha army",
+            "context": "Netoji Palkar served as Shivaji's trusted Sarnaubat during the Afzal Khan campaign"
+        },
+        "waagh_nakha": {
+            "term": "Waagh-nakha",
+            "definition": "Tiger claws - a concealed weapon worn on fingers with sharp steel claws",
+            "context": "Shivaji used waagh-nakha as his secret weapon during the encounter with Afzal Khan"
+        },
+        "shamiana": {
+            "term": "Shamiana",
+            "definition": "A large decorative tent or marquee used for meetings and ceremonies",
+            "context": "The fateful meeting between Shivaji and Afzal Khan took place in a shamiana"
+        },
+        "watandar": {
+            "term": "Watandar",
+            "definition": "Hereditary village officials who held rights to land and local administration",
+            "context": "Afzal Khan tried to bribe watandars from Shivaji's territory to switch sides"
+        },
+        "deshmukh": {
+            "term": "Deshmukh",
+            "definition": "Village headman or chief, responsible for revenue collection and local governance",
+            "context": "Some Deshmukhs from Bhosale jagir submitted to Afzal Khan before the battle"
+        }
+    }
+}
