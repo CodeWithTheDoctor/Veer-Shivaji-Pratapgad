@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bq8k2n5r7m9qwx"
-path="res://.godot/imported/bijapur_court_bg.png-8b5c184e241bdd1dbe3c5a81083b2ef4.ctex"
+uid="uid://0aq0ftxbnd20"
+path="res://.godot/imported/bijapur_court_bg.png-10b4be54e76ba699459f89abd7cac59e.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/art/cutscenes/backgrounds/bijapur_court_bg.png"
-dest_files=["res://.godot/imported/bijapur_court_bg.png-8b5c184e241bdd1dbe3c5a81083b2ef4.ctex"]
+dest_files=["res://.godot/imported/bijapur_court_bg.png-10b4be54e76ba699459f89abd7cac59e.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1 
+detect_3d/compress_to=1

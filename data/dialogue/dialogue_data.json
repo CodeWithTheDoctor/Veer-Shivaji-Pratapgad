@@ -176,5 +176,87 @@
             "speaker": "Shivaji",
             "text": "These are troubled times, but with courage and wisdom, we shall prevail."
         }
+    ],
+    "bijapur_appointment": [
+        {
+            "speaker": "Narrator",
+            "text": "In the grand court of Bijapur, Sultan Adil Shah contemplates the growing threat of the young Maratha chief..."
+        },
+        {
+            "speaker": "Court Official",
+            "text": "Your Majesty, Shivaji's raids have grown bolder. Our revenue from the southern provinces has declined significantly."
+        },
+        {
+            "speaker": "Afzal Khan",
+            "text": "My Sultan, grant me permission to march against this upstart. I shall bring you his head within a month!"
+        },
+        {
+            "speaker": "Court Official",
+            "text": "Afzal Khan is our finest general, Your Majesty. If anyone can end this Maratha menace, it is he."
+        },
+        {
+            "speaker": "Afzal Khan",
+            "text": "I have crushed many rebellions before. This Shivaji is nothing but a hill rat hiding in his caves!"
+        },
+        {
+            "speaker": "Narrator",
+            "text": "And so, the mighty Afzal Khan was given command of a vast army to march against Shivaji..."
+        }
+    ],
+    "temple_destruction": [
+        {
+            "speaker": "Narrator",
+            "text": "As Afzal Khan's army marched through the Konkan, they left destruction in their wake..."
+        },
+        {
+            "speaker": "Worried Villager",
+            "text": "They have destroyed our sacred temple! The bells that rang for centuries are now silent..."
+        },
+        {
+            "speaker": "Temple Priest",
+            "text": "This is not just an attack on stone and mortar, but on our very souls. Our faith will endure, but the pain runs deep."
+        },
+        {
+            "speaker": "Worried Villager",
+            "text": "Someone must warn Shivaji Maharaj! The demon approaches with fire and sword!"
+        },
+        {
+            "speaker": "Temple Priest",
+            "text": "Have faith, my child. Dharma will triumph over adharma. The righteous shall prevail."
+        },
+        {
+            "speaker": "Narrator",
+            "text": "Word of these atrocities spread quickly through Shivaji's network of loyal supporters..."
+        }
+    ],
+    "messenger_delivers_news": [
+        {
+            "speaker": "Messenger",
+            "text": "Maharaj! I bring urgent news from the Konkan region!"
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Speak freely, brave messenger. What news do you carry?"
+        },
+        {
+            "speaker": "Messenger",
+            "text": "Afzal Khan marches with a vast army - nearly 40,000 strong! He destroys temples and terrorizes villages in his path!"
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "The reports of his cruelty have reached my ears. This giant thinks to intimidate us with terror."
+        },
+        {
+            "speaker": "Messenger",
+            "text": "The people look to you for protection, Maharaj. They have faith that you will save them from this demon."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Their faith shall not be misplaced. Sometimes the mightiest enemy can be defeated by using their own strength against them."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Rest now, faithful messenger. You have served Swarajya well. The real battle begins now..."
+        }
     ]
 }

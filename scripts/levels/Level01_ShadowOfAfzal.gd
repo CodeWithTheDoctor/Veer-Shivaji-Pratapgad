@@ -16,8 +16,8 @@ var npcs: Array = []
 var areas: Array = []
 
 var level_started: bool = false
-var cutscene_playing: bool = false
 var current_story_beat: int = 0
+var pending_objective_completion: String = ""
 
 # Story progression states
 enum StoryBeat {
@@ -200,120 +200,132 @@ func start_level():
 	
 	print("=== LEVEL 1: THE SHADOW OF AFZAL KHAN ===")
 	print("STORY: You are a messenger bringing urgent news about Afzal Khan to Shivaji Maharaj")
-	print("CONTROLS: A/D to move, SPACE to jump, E to interact")
-	print("GOAL: Navigate through the village, avoid scouts, talk to villagers, reach Shivaji")
 	
 	# Start with opening cutscene
 	play_opening_cutscene()
+	print("CONTROLS: A/D to move, SPACE to jump, E to interact")
+	print("GOAL: Navigate through the village, avoid scouts, talk to villagers, reach Shivaji")
 
 func play_opening_cutscene():
-	cutscene_playing = true
-	current_story_beat = StoryBeat.OPENING_CUTSCENE
+	print("Starting opening cutscene...")
 	
-	# Disable player movement during cutscene
+	# Load and instantiate cutscene player
+	var cutscene_scene = preload("res://scenes/cutscenes/CutscenePlayer.tscn")
+	var cutscene_player = cutscene_scene.instantiate()
+	
+	# Add to scene tree
+	get_tree().current_scene.add_child(cutscene_player)
+	
+	# Connect signal
+	cutscene_player.cutscene_finished.connect(_on_opening_cutscene_finished)
+	
+	# Start the cutscene
+	cutscene_player.play_cutscene("opening_bijapur_court")
+	
+	# Pause gameplay during cutscene
+	set_gameplay_active(false)
+
+func play_ending_cutscene():
+	print("Starting ending cutscene...")
+	
+	# Load and instantiate cutscene player
+	var cutscene_scene = preload("res://scenes/cutscenes/CutscenePlayer.tscn")
+	var cutscene_player = cutscene_scene.instantiate()
+	
+	# Add to scene tree
+	get_tree().current_scene.add_child(cutscene_player)
+	
+	# Connect signal
+	cutscene_player.cutscene_finished.connect(_on_ending_cutscene_finished)
+	
+	# Start the cutscene
+	cutscene_player.play_cutscene("ending_rajgad_fort")
+	
+	# Pause gameplay during cutscene
+	set_gameplay_active(false)
+
+func _on_opening_cutscene_finished(next_scene: String):
+	print("Opening cutscene finished, transitioning to: ", next_scene)
+	
+	# Remove cutscene player
+	var cutscene_player = get_tree().get_nodes_in_group("cutscene_player")
+	if cutscene_player.size() > 0:
+		cutscene_player[0].queue_free()
+	
+	# Resume gameplay
+	set_gameplay_active(true)
+	current_story_beat = StoryBeat.VILLAGE_NAVIGATION
+	
+	# Update objectives
+	complete_objective("watch_appointment")
+
+func _on_ending_cutscene_finished(next_scene: String):
+	print("Ending cutscene finished, transitioning to: ", next_scene)
+	
+	# Remove cutscene player
+	var cutscene_player = get_tree().get_nodes_in_group("cutscene_player")
+	if cutscene_player.size() > 0:
+		cutscene_player[0].queue_free()
+	
+	# Complete level
+	complete_level()
+
+func set_gameplay_active(active: bool):
+	# Enable/disable player input and camera
 	if player:
-		player.disable_movement()
+		player.set_physics_process(active)
+		player.set_process_input(active)
 	
-	# Create dialogue for Bijapur court scene
-	var bijapur_dialogue = [
-		{
-			"speaker": "Narrator",
-			"text": "In the year 1659, the Adilshahi kingdom faced a growing threat. A young warrior named Shivaji had begun to challenge their authority..."
-		},
-		{
-			"speaker": "Mohammad Adil Shah",
-			"text": "Mother, this Shivaji grows bolder by the day. Our territories shrink while his influence spreads."
-		},
-		{
-			"speaker": "Badi Sahiba", 
-			"text": "Fear not, my son. We have the perfect weapon. Summon Afzal Khan."
-		},
-		{
-			"speaker": "Afzal Khan",
-			"text": "Your Majesty commands, and I obey."
-		},
-		{
-			"speaker": "Mohammad Adil Shah",
-			"text": "Afzal Khan, you are appointed our war general. Bring me Shivaji's head, or his submission."
-		},
-		{
-			"speaker": "Afzal Khan",
-			"text": "Who is this Shivaji? I will not even need to dismount my horse to arrest him!"
-		},
-		{
-			"speaker": "Narrator",
-			"text": "Afzal Khan's seal bore the words 'Killer of Infidels, Destroyer of Deities.' His reputation preceded him..."
-		}
-	]
+	if camera:
+		camera.enabled = active
 	
-	# Start dialogue sequence
-	DialogueManager.start_dialogue_sequence(bijapur_dialogue)
+	# Hide/show UI during cutscenes
+	if objectives_ui:
+		objectives_ui.visible = active
 
 func _on_dialogue_ended():
-	cutscene_playing = false
-	
-	match current_story_beat:
-		StoryBeat.OPENING_CUTSCENE:
-			# Opening cutscene finished, start village navigation
-			complete_objective("watch_appointment")
-			current_story_beat = StoryBeat.VILLAGE_NAVIGATION
-			
-			# Enable player movement
-			if player:
-				player.enable_movement()
-			
-			print("=== VILLAGE NAVIGATION BEGINS ===")
-			print("Navigate through the village to reach Shivaji at Rajgad Fort")
-			
-		StoryBeat.REACHING_RAJGAD:
-			# Ending cutscene finished, complete level
+	# Handle pending objective completion after dialogue ends
+	if pending_objective_completion != "":
+		complete_objective(pending_objective_completion)
+		pending_objective_completion = ""
+		
+		# Check if all objectives are complete
+		var all_complete = true
+		for objective in current_objectives:
+			if not objective.completed:
+				all_complete = false
+				break
+		
+		if all_complete:
+			print("All objectives completed! Level finished.")
 			complete_level()
 
 func _on_npc_interacted(npc: Node):
 	var npc_id = npc.get_meta("npc_id", "")
+	print("Player interacted with NPC: ", npc_id)
 	
+	# Handle story progression based on NPC
 	match npc_id:
 		"worried_villager":
-			current_story_beat = StoryBeat.VILLAGER_INTERACTIONS
-			# Dialogue handled by DialogueManager
-			
+			if not is_objective_completed("talk_to_villagers"):
+				pending_objective_completion = "talk_to_villagers"
+				print("Talked to worried villager - will complete objective after dialogue")
 		"priest":
-			current_story_beat = StoryBeat.VILLAGER_INTERACTIONS
-			# Dialogue handled by DialogueManager
-			
+			if not is_objective_completed("talk_to_villagers"):
+				pending_objective_completion = "talk_to_villagers"
+				print("Talked to priest - will complete objective after dialogue")
 		"shivaji":
-			current_story_beat = StoryBeat.REACHING_RAJGAD
-			complete_objective("reach_shivaji")
-			play_ending_cutscene()
+			if not is_objective_completed("reach_shivaji"):
+				# Skip regular dialogue and go straight to ending cutscene
+				print("Reached Shivaji - starting ending cutscene")
+				play_ending_cutscene()
+				return
 
-func play_ending_cutscene():
-	cutscene_playing = true
-	
-	# Disable player movement
-	if player:
-		player.disable_movement()
-	
-	# Create dialogue for Rajgad Fort scene
-	var rajgad_dialogue = [
-		{
-			"speaker": "Messenger",
-			"text": "Shivaji Maharaj, Afzal Khan has been appointed. He comes with over 20,000 men!"
-		},
-		{
-			"speaker": "Shivaji",
-			"text": "So, the butcher of temples seeks to add my head to his collection. We shall see who the hunter truly is."
-		},
-		{
-			"speaker": "Netoji Palkar",
-			"text": "My lord, his reputation is fearsome. Even the stones speak of his cruelty."
-		},
-		{
-			"speaker": "Shivaji",
-			"text": "Netoji, a reputation built on fear is like a palace built on sand. Gather our advisors. We have preparations to make."
-		}
-	]
-	
-	DialogueManager.start_dialogue_sequence(rajgad_dialogue)
+func is_objective_completed(objective_id: String) -> bool:
+	for objective in current_objectives:
+		if objective.id == objective_id:
+			return objective.completed
+	return false
 
 func _on_scout_area_entered(body: Node):
 	if body == player:
@@ -377,6 +389,6 @@ func complete_level():
 
 func _input(event):
 	# Handle level-specific inputs
-	if event.is_action_pressed("ui_cancel") and not cutscene_playing:
+	if event.is_action_pressed("ui_cancel"):
 		# Return to main menu
 		get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn") 

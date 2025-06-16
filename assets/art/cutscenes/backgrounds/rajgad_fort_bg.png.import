@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dr0m4p7t9o1syz"
-path="res://.godot/imported/rajgad_fort_bg.png-0d7e406g463dff3gdf5e7c03195d5fg6.ctex"
+uid="uid://d2e01japqyj82"
+path="res://.godot/imported/rajgad_fort_bg.png-3c309c8702a31aff7446617fe7bbc2d3.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/art/cutscenes/backgrounds/rajgad_fort_bg.png"
-dest_files=["res://.godot/imported/rajgad_fort_bg.png-0d7e406g463dff3gdf5e7c03195d5fg6.ctex"]
+dest_files=["res://.godot/imported/rajgad_fort_bg.png-3c309c8702a31aff7446617fe7bbc2d3.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1 
+detect_3d/compress_to=1

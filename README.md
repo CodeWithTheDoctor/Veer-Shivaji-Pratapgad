@@ -6,6 +6,8 @@ Built with Godot 4.x | Platforms: MacOS, iPad
 
 ---
 
+![Main Menu](assets/art/ui/main-menu-scrn.png)
+
 ## 🏛️ About the Story
 
 Experience one of the most pivotal moments in Maratha history through an engaging platformer that combines strategic storytelling with educational content. Guide Shivaji through intelligence gathering, diplomatic maneuvering, and the climactic confrontation that would change the course of the Deccan.

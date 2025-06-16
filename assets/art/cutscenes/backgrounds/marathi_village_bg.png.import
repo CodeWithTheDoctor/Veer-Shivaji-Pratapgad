@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d31tb0ixsre1w"
-path="res://.godot/imported/temple_destruction_bg.png-032570a3420befa053f4dae2d1256552.ctex"
+uid="uid://cngrmx76bwhuu"
+path="res://.godot/imported/marathi_village_bg.png-f2693bf870359d5e40343400fe936500.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/cutscenes/backgrounds/temple_destruction_bg.png"
-dest_files=["res://.godot/imported/temple_destruction_bg.png-032570a3420befa053f4dae2d1256552.ctex"]
+source_file="res://assets/art/cutscenes/backgrounds/marathi_village_bg.png"
+dest_files=["res://.godot/imported/marathi_village_bg.png-f2693bf870359d5e40343400fe936500.ctex"]
 
 [params]
 

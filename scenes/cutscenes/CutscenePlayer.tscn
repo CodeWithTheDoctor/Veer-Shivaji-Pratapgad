@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/cutscenes/CutscenePlayer.gd" id="1_cutscene"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="2_dialogue"]
 
-[node name="CutscenePlayer" type="Control"]
+[node name="CutscenePlayer" type="Control" groups=["cutscene_player"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
