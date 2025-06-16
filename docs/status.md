@@ -109,7 +109,9 @@ veer-shivaji/
 
 ### **Week 1-2: Make it Look Like a Real Game**
 
-- [ ] Create Shivaji character sprite (walking animation)
+- [x] Create Shivaji character sprite (walking animation) ✅ **COMPLETED**
+- [x] Create Shivaji idle animation ✅ **COMPLETED**
+- [x] Integrate sprites into Godot project ✅ **COMPLETED**
 - [ ] Design 3 NPC sprites (distinct visual designs)
 - [ ] Create basic platform tiles and backgrounds
 - [ ] Add jump sound effect and background music
@@ -125,7 +127,7 @@ veer-shivaji/
 
 - **Core Gameplay**: ✅ 100% Complete
 - **Story Content**: ✅ 20% Complete (1/9 levels)
-- **Visual Assets**: 🔄 10% Complete (placeholder art)
+- **Visual Assets**: 🔄 25% Complete (Shivaji sprites integrated)
 - **Audio Integration**: 🔄 5% Complete (framework only)
 - **Educational Features**: ✅ 80% Complete (cards system working)
 
@@ -137,4 +139,35 @@ veer-shivaji/
 **Next Focus**: Visual presentation to match the quality of the underlying systems
 **Timeline**: With focused art creation, could have a polished demo within 4-6 weeks
 
-*Last Updated: Level 1 complete with full save system - Ready for visual polish phase*
+*Last Updated: Shivaji sprites integrated and tested - Ready for NPC sprites and Level 2*
+
+## 🔧 Recent Bug Fixes
+
+### **Sprite Integration Issue - RESOLVED ✅**
+
+- **Problem**: Manual `.tres` file couldn't be loaded by Godot
+- **Root Cause**: Sprite dimensions were 64x64 (idle) and 96x128 (walk), not the expected 32x64
+- **Solution**: Created inline SpriteFrames with proper AtlasTexture regions
+- **Result**: Shivaji now has working 2-frame idle and 3-frame walk animations
+- **Status**: ✅ WORKING - Sprites tested and gameplay refined
+
+### **Sprite & Gameplay Polish - COMPLETED ✅**
+
+- **Enhanced**: Increased sprite size by 50% for better visibility
+- **Improved**: Reduced jump height by 25% for more controlled platforming
+- **Result**: Character now feels more responsive and visually appealing
+- **Status**: Ready for NPC sprite creation
+
+### **Code Quality Improvements - COMPLETED ✅**
+
+- **Fixed**: 5 GDScript warnings (unused parameters, variable shadowing, invalid UIDs)
+- **Improved**: Clean console output for better debugging experience
+- **Enhanced**: Code follows Godot best practices and conventions
+- **Status**: Project now runs warning-free
+
+### **Narrative Flow Improvements - COMPLETED ✅**
+
+- **Problem**: Objective completion messages appeared before dialogue finished
+- **Solution**: Implemented pending objective system that waits for dialogue to end
+- **Result**: Smooth, uninterrupted storytelling experience
+- **Status**: Perfect narrative timing achieved

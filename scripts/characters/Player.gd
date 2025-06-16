@@ -3,7 +3,7 @@ class_name Player
 
 # Platformer Physics Constants
 @export var speed: float = 300.0
-@export var jump_velocity: float = -600.0
+@export var jump_velocity: float = -550.0
 @export var gravity: float = 1200.0
 @export var acceleration: float = 1500.0
 @export var friction: float = 1200.0
@@ -85,7 +85,11 @@ func update_animation_state():
 	if is_jumping:
 		play_animation_if_exists("jump")
 	elif is_falling:
-		play_animation_if_exists("fall")
+		# Use jump animation for falling if fall doesn't exist
+		if sprite.sprite_frames.has_animation("fall"):
+			play_animation_if_exists("fall")
+		else:
+			play_animation_if_exists("jump")
 	elif abs(velocity.x) > 10:
 		play_animation_if_exists("walk")
 	else:

@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://c7qn8dxjqyxn4"]
 
 [ext_resource type="Script" path="res://scripts/levels/Level01_ShadowOfAfzal.gd" id="1_abcde"]
-[ext_resource type="PackedScene" uid="uid://chqn8dxjqyxn2" path="res://characters/Shivaji.tscn" id="2_bcdef"]
-[ext_resource type="PackedScene" uid="uid://dhqn8dxjqyxn1" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="3_cdefg"]
+[ext_resource type="PackedScene" path="res://characters/Shivaji.tscn" id="2_bcdef"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="3_cdefg"]
 [ext_resource type="Script" path="res://scripts/ui/ObjectivesUI.gd" id="4_defgh"]
 [ext_resource type="Script" path="res://scripts/ui/LevelCompleteUI.gd" id="5_efghi"]
 [ext_resource type="Script" path="res://scripts/systems/PlatformerCamera.gd" id="6_fghij"]

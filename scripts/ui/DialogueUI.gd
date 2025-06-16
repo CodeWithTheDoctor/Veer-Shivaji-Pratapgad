@@ -5,12 +5,12 @@ extends Control
 @onready var dialogue_text = $DialoguePanel/VBoxContainer/DialogueText
 @onready var continue_hint = $DialoguePanel/VBoxContainer/ContinueHint
 
-var is_visible: bool = false
+var dialogue_visible: bool = false
 
 func _ready():
 	# Start hidden
 	visible = false
-	is_visible = false
+	dialogue_visible = false
 	
 	# Connect to DialogueManager signals
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
@@ -30,7 +30,7 @@ func _on_dialogue_line_changed(speaker: String, text: String):
 
 func show_dialogue_ui():
 	visible = true
-	is_visible = true
+	dialogue_visible = true
 	
 	# Create a nice fade-in effect
 	var tween = create_tween()
@@ -45,7 +45,7 @@ func hide_dialogue_ui():
 	tween.tween_property(self, "modulate:a", 0.0, 0.3)
 	tween.tween_callback(func(): 
 		visible = false
-		is_visible = false
+		dialogue_visible = false
 	)
 	
 	print("Dialogue UI hidden")
@@ -59,7 +59,7 @@ func update_dialogue_content(speaker: String, text: String):
 	var tween = create_tween()
 	tween.tween_property(dialogue_text, "modulate:a", 1.0, 0.2)
 
-func _input(event):
+func _input(_event):
 	# Let DialogueManager handle input - don't interfere with it
 	pass
 

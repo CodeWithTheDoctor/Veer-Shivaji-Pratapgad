@@ -15,6 +15,7 @@ var areas: Array = []
 
 var level_started: bool = false
 var cutscene_playing: bool = false
+var pending_objective_completion: String = ""
 
 func _ready():
 	load_level_data()
@@ -175,8 +176,14 @@ func _on_dialogue_ended():
 	# Re-enable player movement after cutscene
 	if player:
 		player.enable_movement()
+	
+	# Complete any pending objective now that dialogue has finished
+	if pending_objective_completion != "":
+		print("Dialogue ended - completing objective: ", pending_objective_completion)
+		complete_objective(pending_objective_completion)
+		pending_objective_completion = ""  # Clear the pending objective
 
-func _on_area_entered(body: Node, area_id: String):
+func _on_area_entered(body: Node, _area_id: String):
 	if body != player:
 		return
 	
@@ -186,19 +193,21 @@ func _on_area_entered(body: Node, area_id: String):
 func _on_npc_interacted(npc: Node):
 	var npc_id = npc.get_meta("npc_id", "")
 	print("NPC interacted: ", npc_id)  # Debug print
+	
+	# Store which objective should be completed after dialogue ends
 	match npc_id:
 		"advisor":
 			if not get_objective_by_id("learn_threat").completed:
-				print("Completing learn_threat objective")
-				complete_objective("learn_threat")
+				print("Setting learn_threat objective to complete after dialogue")
+				pending_objective_completion = "learn_threat"
 		"spy_merchant":
 			if not get_objective_by_id("gather_intelligence").completed:
-				print("Completing gather_intelligence objective")
-				complete_objective("gather_intelligence")
+				print("Setting gather_intelligence objective to complete after dialogue")
+				pending_objective_completion = "gather_intelligence"
 		"netaji_palkar":
 			if not get_objective_by_id("consult_netaji").completed:
-				print("Completing consult_netaji objective")
-				complete_objective("consult_netaji")
+				print("Setting consult_netaji objective to complete after dialogue")
+				pending_objective_completion = "consult_netaji"
 
 func complete_objective(objective_id: String):
 	var objective = get_objective_by_id(objective_id)
