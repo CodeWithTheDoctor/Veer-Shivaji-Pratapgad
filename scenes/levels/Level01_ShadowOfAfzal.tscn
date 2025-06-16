@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://c7qn8dxjqyxn4"]
 
 [ext_resource type="Script" path="res://scripts/levels/Level01_ShadowOfAfzal.gd" id="1_abcde"]
-[ext_resource type="PackedScene" path="res://characters/Shivaji.tscn" id="2_bcdef"]
+[ext_resource type="PackedScene" path="res://characters/Player.tscn" id="2_bcdef"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="3_cdefg"]
 [ext_resource type="Script" path="res://scripts/ui/ObjectivesUI.gd" id="4_defgh"]
 [ext_resource type="Script" path="res://scripts/ui/LevelCompleteUI.gd" id="5_efghi"]
@@ -35,7 +35,7 @@ color = Color(0.4, 0.6, 0.2, 1)
 shape = SubResource("RectangleShape2D_ground")
 
 [node name="Platform1" type="StaticBody2D" parent="Environment"]
-position = Vector2(300, 420)
+position = Vector2(300, 350)
 
 [node name="Platform1Sprite" type="ColorRect" parent="Environment/Platform1"]
 offset_left = -100.0

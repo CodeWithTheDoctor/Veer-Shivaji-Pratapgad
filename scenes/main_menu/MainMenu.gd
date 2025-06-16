@@ -7,10 +7,18 @@ extends Control
 @onready var credits_button = $TitleContainer/MenuContainer/CreditsButton
 @onready var quit_button = $TitleContainer/MenuContainer/QuitButton
 
+@onready var title_label = $TitleContainer/TitleLabel
+@onready var subtitle_label = $TitleContainer/SubtitleLabel
+@onready var menu_container = $TitleContainer/MenuContainer
+
 @onready var shivaji_portrait = $ShivajiPortrait
 @onready var fade_overlay = $FadeOverlay
 @onready var title_animation = $TitleAnimation
 @onready var background_animation = $BackgroundAnimation
+
+# Shivkaari Cards UI
+var cards_ui_scene = preload("res://scenes/ui/cards/ShivkaariCardsUI.tscn")
+var cards_ui_instance = null
 
 func _ready():
 	setup_menu()
@@ -31,13 +39,26 @@ func setup_menu():
 	print("Main Menu: Save data exists = ", has_save)
 	continue_button.visible = has_save
 	
+	# Update cards button text to show unlocked count
+	update_cards_button_text()
+	
 	# Enable focus for keyboard navigation
 	start_button.grab_focus()
+
+func update_cards_button_text():
+	var unlocked_count = GameManager.get_unlocked_cards_count()
+	if unlocked_count > 0:
+		cards_button.text = "Cards (" + str(unlocked_count) + "/8)"
+	else:
+		cards_button.text = "Cards (0/8)"
 
 func play_intro_animation():
 	# Start with everything hidden behind black overlay
 	fade_overlay.color = Color(0, 0, 0, 1)
 	shivaji_portrait.modulate.a = 0.0
+	title_label.modulate.a = 0.0
+	subtitle_label.modulate.a = 0.0
+	menu_container.modulate.a = 0.0
 	
 	# Create comprehensive fade-in sequence
 	var tween = create_tween()
@@ -46,14 +67,24 @@ func play_intro_animation():
 	# Fade out the black overlay (fade in from black)
 	tween.tween_property(fade_overlay, "color:a", 0.0, 2.0)
 	
+	# Hide the overlay completely after fade-in to ensure no mouse blocking
+	tween.tween_callback(func(): fade_overlay.visible = false).set_delay(2.1)
+	
 	# Fade in Shivaji portrait with slight delay for dramatic effect
 	tween.tween_property(shivaji_portrait, "modulate:a", 1.0, 1.5).set_delay(0.5)
 	
 	# Add subtle slide-in effect for the portrait
-	shivaji_portrait.position.x = -150  # Start slightly more to the left
-	tween.tween_property(shivaji_portrait, "position:x", -100, 1.5).set_delay(0.5)
+	shivaji_portrait.offset_left = -30  # Start slightly more to the left
+	tween.tween_property(shivaji_portrait, "offset_left", 0, 1.5).set_delay(0.5)
 	
-	print("Main menu fade-in animation started")
+	# Fade in title and subtitle after portrait starts appearing
+	tween.tween_property(title_label, "modulate:a", 1.0, 1.0).set_delay(1.0)
+	tween.tween_property(subtitle_label, "modulate:a", 1.0, 1.0).set_delay(1.2)
+	
+	# Fade in menu options after title and subtitle are visible
+	tween.tween_property(menu_container, "modulate:a", 1.0, 1.0).set_delay(2.5)
+	
+	print("Main menu fade-in animation started with sequential title/menu effects")
 
 func start_main_menu_music():
 	# Start the main menu playlist with fade-in effect
@@ -133,8 +164,34 @@ func load_level(level_number: int):
 
 func open_cards_collection():
 	print("Opening Shivkaari Cards collection...")
-	# TODO: Implement cards collection scene
-	show_placeholder_message("Shivkaari Cards collection coming soon!")
+	
+	# Create cards UI if it doesn't exist
+	if not cards_ui_instance:
+		cards_ui_instance = cards_ui_scene.instantiate()
+		add_child(cards_ui_instance)
+		cards_ui_instance.cards_ui_closed.connect(_on_cards_ui_closed)
+	
+	# Show the cards UI
+	cards_ui_instance.show_cards_ui()
+	
+	# Disable menu interaction while cards UI is open
+	set_menu_interaction(false)
+
+func _on_cards_ui_closed():
+	# Re-enable menu interaction
+	set_menu_interaction(true)
+	
+	# Update cards button text in case new cards were unlocked
+	update_cards_button_text()
+
+func set_menu_interaction(enabled: bool):
+	# Enable/disable all menu buttons
+	start_button.disabled = not enabled
+	continue_button.disabled = not enabled
+	cards_button.disabled = not enabled
+	settings_button.disabled = not enabled
+	credits_button.disabled = not enabled
+	quit_button.disabled = not enabled
 
 func open_settings():
 	print("Opening settings...")

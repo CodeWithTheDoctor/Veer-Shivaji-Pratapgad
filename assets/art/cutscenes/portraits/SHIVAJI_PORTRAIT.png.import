@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://dj7l3xp6j10p2"
+path="res://.godot/imported/SHIVAJI_PORTRAIT.png-95f273ac59b3c391eff9707483f5a19f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/portraits/SHIVAJI_PORTRAIT.png"
+dest_files=["res://.godot/imported/SHIVAJI_PORTRAIT.png-95f273ac59b3c391eff9707483f5a19f.ctex"]
 
 [params]
 

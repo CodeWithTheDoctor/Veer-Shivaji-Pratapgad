@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://dw2m4edoq04bd"
+path="res://.godot/imported/marathi_messenger_portait.png-6a483c34e64a2514fc33d319c0bf748f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/portraits/marathi_messenger_portait.png"
+dest_files=["res://.godot/imported/marathi_messenger_portait.png-6a483c34e64a2514fc33d319c0bf748f.ctex"]
 
 [params]
 

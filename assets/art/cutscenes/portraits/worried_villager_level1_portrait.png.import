@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://4dj16qxrmdar"
+path="res://.godot/imported/worried_villager_level1_portrait.png-b0afb54ddb244cb7def95ac56c7bc2ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/portraits/worried_villager_level1_portrait.png"
+dest_files=["res://.godot/imported/worried_villager_level1_portrait.png-b0afb54ddb244cb7def95ac56c7bc2ca.ctex"]
 
 [params]
 

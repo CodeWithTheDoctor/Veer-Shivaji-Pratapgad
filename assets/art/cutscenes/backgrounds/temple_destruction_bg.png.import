@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://cq9l3o6s8n0rxy"
+path="res://.godot/imported/temple_destruction_bg.png-9c6d295f352cee2fce4d6b92094c4df5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/backgrounds/temple_destruction_bg.png"
+dest_files=["res://.godot/imported/temple_destruction_bg.png-9c6d295f352cee2fce4d6b92094c4df5.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=1 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://b16sm8x8eprh6"
+path="res://.godot/imported/temple_priest_level1_portrait.png-6156e1fe5022bb9a7262947099c1b48e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/portraits/temple_priest_level1_portrait.png"
+dest_files=["res://.godot/imported/temple_priest_level1_portrait.png-6156e1fe5022bb9a7262947099c1b48e.ctex"]
 
 [params]
 

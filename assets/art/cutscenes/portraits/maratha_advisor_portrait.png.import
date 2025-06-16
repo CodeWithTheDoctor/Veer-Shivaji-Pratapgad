@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://np5dd1rlvg3v"
+path="res://.godot/imported/maratha_advisor_portrait.png-0402c53526893ec04a76530d0c7830bb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/portraits/maratha_advisor_portrait.png"
+dest_files=["res://.godot/imported/maratha_advisor_portrait.png-0402c53526893ec04a76530d0c7830bb.ctex"]
 
 [params]
 

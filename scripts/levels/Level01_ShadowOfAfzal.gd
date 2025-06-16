@@ -1,12 +1,14 @@
 extends Node2D
 
 # Level 1: The Shadow of Afzal Khan
-# This level introduces the player to the story and demonstrates intelligence gathering
+# Story: Player is a messenger bringing urgent news to Shivaji about Afzal Khan's appointment
+# Based on story-plan.md structure
 
 @onready var player = $Player
 @onready var objectives_ui = $UI/ObjectivesUI
 @onready var dialogue_ui = $UI/DialogueUI
 @onready var level_complete_ui = $UI/LevelCompleteUI
+@onready var camera = $PlatformerCamera
 
 var level_data: Dictionary = {}
 var current_objectives: Array = []
@@ -15,7 +17,17 @@ var areas: Array = []
 
 var level_started: bool = false
 var cutscene_playing: bool = false
-var pending_objective_completion: String = ""
+var current_story_beat: int = 0
+
+# Story progression states
+enum StoryBeat {
+	OPENING_CUTSCENE,      # Bijapur court + temple destruction
+	VILLAGE_NAVIGATION,    # Messenger travels through village
+	STEALTH_SECTION,       # Avoiding Afzal Khan's scouts
+	VILLAGER_INTERACTIONS, # Talk to worried villagers and priest
+	REACHING_RAJGAD,       # Arrive at Shivaji's fort
+	ENDING_CUTSCENE        # Deliver message to Shivaji
+}
 
 func _ready():
 	load_level_data()
@@ -23,26 +35,81 @@ func _ready():
 	start_level()
 
 func load_level_data():
-	var file = FileAccess.open("res://data/level_data/level01_data.json", FileAccess.READ)
-	if file:
-		var json_string = file.get_as_text()
-		var json = JSON.new()
-		var parse_result = json.parse(json_string)
-		if parse_result == OK:
-			level_data = json.data["level_01"]
-		file.close()
-	else:
-		print("Failed to load level 1 data")
+	# Create Level 1 data based on story-plan.md
+	level_data = {
+		"name": "The Shadow of Afzal Khan",
+		"objectives": [
+			{
+				"id": "watch_appointment",
+				"text": "Watch Afzal Khan's appointment ceremony",
+				"completed": false
+			},
+			{
+				"id": "navigate_village", 
+				"text": "Navigate through the village as messenger",
+				"completed": false
+			},
+			{
+				"id": "avoid_scouts",
+				"text": "Avoid Afzal Khan's scouts using stealth",
+				"completed": false
+			},
+			{
+				"id": "talk_to_villagers",
+				"text": "Speak with worried villagers and priest",
+				"completed": false
+			},
+			{
+				"id": "reach_shivaji",
+				"text": "Deliver urgent news to Shivaji Maharaj",
+				"completed": false
+			}
+		],
+		"npcs": [
+			{
+				"id": "worried_villager",
+				"name": "Worried Villager",
+				"position": {"x": 200, "y": 470},  # Ground level (550 - 80 for character height)
+				"dialogue_id": "villager_fear",
+				"interaction_text": "Press E to talk to villager"
+			},
+			{
+				"id": "priest",
+				"name": "Village Priest", 
+				"position": {"x": 600, "y": 240},  # Platform2 level (320 - 80 for character height)
+				"dialogue_id": "priest_temples",
+				"interaction_text": "Press E to talk to priest"
+			},
+			{
+				"id": "shivaji",
+				"name": "Chhatrapati Shivaji Maharaj",
+				"position": {"x": 900, "y": 140},  # Platform3 level (220 - 80 for character height)
+				"dialogue_id": "shivaji_receives_news",
+				"interaction_text": "Press E to deliver message"
+			}
+		],
+		"cutscenes": [
+			{
+				"id": "opening_bijapur_court",
+				"trigger": "level_start",
+				"dialogue_id": "bijapur_appointment"
+			},
+			{
+				"id": "ending_rajgad_fort",
+				"trigger": "reach_shivaji",
+				"dialogue_id": "messenger_delivers_news"
+			}
+		]
+	}
+	
+	current_objectives = level_data.get("objectives", [])
 
 func setup_level():
-	# Initialize objectives
-	current_objectives = level_data.get("objectives", [])
+	# Create NPCs based on story
+	create_story_npcs()
 	
-	# Create NPCs
-	create_npcs()
-	
-	# Create interaction areas
-	create_areas()
+	# Create stealth areas (scout patrol zones)
+	create_stealth_areas()
 	
 	# Connect dialogue manager signals
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
@@ -54,8 +121,13 @@ func setup_level():
 	
 	if level_complete_ui:
 		level_complete_ui.visible = false
+	
+	# Set player as messenger character
+	if player:
+		player.character_name = "Messenger"
+		print("Player is now: Messenger bringing urgent news to Shivaji")
 
-func create_npcs():
+func create_story_npcs():
 	var npc_scene = preload("res://scenes/shared/characters/NPC.tscn")
 	
 	for npc_data in level_data.get("npcs", []):
@@ -65,252 +137,246 @@ func create_npcs():
 		npc.dialogue_id = npc_data.dialogue_id
 		npc.interaction_text = npc_data.interaction_text
 		
-		# Assign specific sprites for each NPC
+		# Assign sprites based on story characters
 		match npc_data.id:
-			"advisor":
-				npc.sprite_texture = load("res://assets/art/characters/advisor/advisor-idle.png")
-				print("Assigned advisor sprite to advisor NPC")
-			"spy_merchant":
-				# Will use placeholder for now (blue rectangle)
-				print("Spy merchant using placeholder sprite")
-			"netaji_palkar":
-				# Will use placeholder for now (blue rectangle)
-				print("Netaji Palkar using placeholder sprite")
+			"worried_villager":
+				# PLACEHOLDER: Need taller villager sprite
+				npc.set_npc_color(Color(0.8, 0.6, 0.4, 1))  # Brown for villager
+				print("Created worried villager NPC (using placeholder - need taller villager sprite)")
+			"priest":
+				# PLACEHOLDER: Need taller priest sprite  
+				npc.set_npc_color(Color(1, 1, 0.8, 1))  # Light yellow/cream for priest
+				print("Created village priest NPC (using placeholder - need taller priest sprite)")
+			"shivaji":
+				# Use actual Shivaji idle sprite with full animation
+				var shivaji_sheet = load("res://assets/art/characters/shivaji/shivaji_idle.png")
+				npc.sprite_texture = shivaji_sheet
+				npc.use_animation = true  # Enable animation for Shivaji
+				print("Created Shivaji NPC with animated idle sprite (4x3 grid, 5 FPS) at Rajgad Fort")
 		
-		# Store the NPC ID in the NPC for later reference
 		npc.set_meta("npc_id", npc_data.id)
 		npc.npc_interacted.connect(_on_npc_interacted)
 		add_child(npc)
 		npcs.append(npc)
 
-func create_areas():
-	for area_data in level_data.get("areas", []):
-		var area = Area2D.new()
-		var collision = CollisionShape2D.new()
-		var shape = RectangleShape2D.new()
-		
-		shape.size = Vector2(area_data.size.width, area_data.size.height)
-		collision.shape = shape
-		area.add_child(collision)
-		
-		area.position = Vector2(area_data.position.x, area_data.position.y)
-		area.name = area_data.id
-		area.body_entered.connect(_on_area_entered.bind(area_data.id))
-		
-		add_child(area)
-		areas.append(area)
+func create_stealth_areas():
+	# Create scout patrol areas where player must use stealth
+	var scout_area = Area2D.new()
+	var collision = CollisionShape2D.new()
+	var shape = RectangleShape2D.new()
+	
+	shape.size = Vector2(200, 100)
+	collision.shape = shape
+	scout_area.add_child(collision)
+	
+	scout_area.position = Vector2(550, 450)  # Between villager and priest
+	scout_area.name = "ScoutPatrolArea"
+	scout_area.body_entered.connect(_on_scout_area_entered)
+	scout_area.body_exited.connect(_on_scout_area_exited)
+	
+	add_child(scout_area)
+	
+	# Add subtle visual indicator for stealth area
+	var stealth_indicator = ColorRect.new()
+	stealth_indicator.size = Vector2(200, 100)
+	stealth_indicator.position = Vector2(-100, -50)
+	stealth_indicator.color = Color(1, 0.5, 0, 0.15)  # Very subtle orange tint
+	scout_area.add_child(stealth_indicator)
+	
+	# Add smaller, less intrusive warning label
+	var warning_label = Label.new()
+	warning_label.text = "Stealth Zone"
+	warning_label.position = Vector2(-35, -10)
+	warning_label.add_theme_color_override("font_color", Color(1, 0.8, 0, 0.7))
+	warning_label.add_theme_font_size_override("font_size", 12)
+	warning_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	scout_area.add_child(warning_label)
+	
+	print("Created scout patrol area with clear visual indicators")
 
 func start_level():
 	level_started = true
+	current_story_beat = StoryBeat.OPENING_CUTSCENE
 	
-	# Show help text
 	print("=== LEVEL 1: THE SHADOW OF AFZAL KHAN ===")
-	print("CONTROLS: A/D or Arrow Keys to move, SPACE/W/Up to jump, E to interact (start dialogue)")
-	print("DIALOGUE: SPACE to advance dialogue, E to start conversations, ESC to return to menu")
-	print("GOAL: Jump between platforms, talk to NPCs, and complete all objectives")
+	print("STORY: You are a messenger bringing urgent news about Afzal Khan to Shivaji Maharaj")
+	print("CONTROLS: A/D to move, SPACE to jump, E to interact")
+	print("GOAL: Navigate through the village, avoid scouts, talk to villagers, reach Shivaji")
 	
-	# Load and restore previous progress ONLY if continuing (not for new game)
-	if GameManager.is_continuing_game:
-		restore_saved_progress()
-	else:
-		print("=== STARTING NEW GAME - FRESH START ===")
-	
-	# Only play opening cutscene if starting fresh
-	if should_play_opening_cutscene():
-		# Disable player movement during opening cutscene
-		if player:
-			player.disable_movement()
-		play_cutscene("bijapur_court")
-	else:
-		# Enable movement immediately if continuing
-		if player:
-			player.enable_movement()
-		print("=== CONTINUING FROM SAVED PROGRESS ===")
+	# Start with opening cutscene
+	play_opening_cutscene()
 
-func should_play_opening_cutscene() -> bool:
-	# Check if any objectives are already completed (means we're continuing)
-	for objective in current_objectives:
-		if objective.completed:
-			return false
-	return true
-
-func restore_saved_progress():
-	print("=== RESTORING SAVED PROGRESS ===")
-	
-	# Check if there's saved progress for this level
-	if GameManager.player_progress.has("level_01_partial"):
-		var saved_data = GameManager.player_progress["level_01_partial"]
-		var completed_objectives = saved_data.get("completed_objectives", [])
-		var saved_position = saved_data.get("player_position", {"x": 100, "y": 500})
-		
-		print("Found saved progress with completed objectives: ", completed_objectives)
-		print("Saved player position: ", saved_position)
-		
-		# Restore completed objectives
-		for objective_id in completed_objectives:
-			var objective = get_objective_by_id(objective_id)
-			if objective:
-				objective.completed = true
-				print("Restored objective: ", objective_id)
-		
-		# Restore player position
-		if player and saved_position:
-			var restore_pos = Vector2(saved_position.x, saved_position.y)
-			player.global_position = restore_pos
-			print("Restored player position to: ", restore_pos)
-		
-		# Update objectives display
-		update_objectives_display()
-		
-		print("Progress restoration complete!")
-	else:
-		print("No saved progress found - starting fresh")
-	
-	print("=== END PROGRESS RESTORATION ===")
-
-
-
-func play_cutscene(cutscene_id: String):
+func play_opening_cutscene():
 	cutscene_playing = true
+	current_story_beat = StoryBeat.OPENING_CUTSCENE
 	
-	# Find cutscene data
-	var cutscene_data = null
-	for cutscene in level_data.get("cutscenes", []):
-		if cutscene.id == cutscene_id:
-			cutscene_data = cutscene
-			break
+	# Disable player movement during cutscene
+	if player:
+		player.disable_movement()
 	
-	if cutscene_data:
-		DialogueManager.start_dialogue(cutscene_data.dialogue_id)
+	# Create dialogue for Bijapur court scene
+	var bijapur_dialogue = [
+		{
+			"speaker": "Narrator",
+			"text": "In the year 1659, the Adilshahi kingdom faced a growing threat. A young warrior named Shivaji had begun to challenge their authority..."
+		},
+		{
+			"speaker": "Mohammad Adil Shah",
+			"text": "Mother, this Shivaji grows bolder by the day. Our territories shrink while his influence spreads."
+		},
+		{
+			"speaker": "Badi Sahiba", 
+			"text": "Fear not, my son. We have the perfect weapon. Summon Afzal Khan."
+		},
+		{
+			"speaker": "Afzal Khan",
+			"text": "Your Majesty commands, and I obey."
+		},
+		{
+			"speaker": "Mohammad Adil Shah",
+			"text": "Afzal Khan, you are appointed our war general. Bring me Shivaji's head, or his submission."
+		},
+		{
+			"speaker": "Afzal Khan",
+			"text": "Who is this Shivaji? I will not even need to dismount my horse to arrest him!"
+		},
+		{
+			"speaker": "Narrator",
+			"text": "Afzal Khan's seal bore the words 'Killer of Infidels, Destroyer of Deities.' His reputation preceded him..."
+		}
+	]
+	
+	# Start dialogue sequence
+	DialogueManager.start_dialogue_sequence(bijapur_dialogue)
 
 func _on_dialogue_ended():
 	cutscene_playing = false
 	
-	# Re-enable player movement after cutscene
-	if player:
-		player.enable_movement()
-	
-	# Complete any pending objective now that dialogue has finished
-	if pending_objective_completion != "":
-		print("Dialogue ended - completing objective: ", pending_objective_completion)
-		complete_objective(pending_objective_completion)
-		pending_objective_completion = ""  # Clear the pending objective
-
-func _on_area_entered(body: Node, _area_id: String):
-	if body != player:
-		return
-	
-	# Areas are disabled for platformer version
-	# All objectives now handled through NPC interactions
+	match current_story_beat:
+		StoryBeat.OPENING_CUTSCENE:
+			# Opening cutscene finished, start village navigation
+			complete_objective("watch_appointment")
+			current_story_beat = StoryBeat.VILLAGE_NAVIGATION
+			
+			# Enable player movement
+			if player:
+				player.enable_movement()
+			
+			print("=== VILLAGE NAVIGATION BEGINS ===")
+			print("Navigate through the village to reach Shivaji at Rajgad Fort")
+			
+		StoryBeat.REACHING_RAJGAD:
+			# Ending cutscene finished, complete level
+			complete_level()
 
 func _on_npc_interacted(npc: Node):
 	var npc_id = npc.get_meta("npc_id", "")
-	print("NPC interacted: ", npc_id)  # Debug print
 	
-	# Store which objective should be completed after dialogue ends
 	match npc_id:
-		"advisor":
-			if not get_objective_by_id("learn_threat").completed:
-				print("Setting learn_threat objective to complete after dialogue")
-				pending_objective_completion = "learn_threat"
-		"spy_merchant":
-			if not get_objective_by_id("gather_intelligence").completed:
-				print("Setting gather_intelligence objective to complete after dialogue")
-				pending_objective_completion = "gather_intelligence"
-		"netaji_palkar":
-			if not get_objective_by_id("consult_netaji").completed:
-				print("Setting consult_netaji objective to complete after dialogue")
-				pending_objective_completion = "consult_netaji"
+		"worried_villager":
+			current_story_beat = StoryBeat.VILLAGER_INTERACTIONS
+			# Dialogue handled by DialogueManager
+			
+		"priest":
+			current_story_beat = StoryBeat.VILLAGER_INTERACTIONS
+			# Dialogue handled by DialogueManager
+			
+		"shivaji":
+			current_story_beat = StoryBeat.REACHING_RAJGAD
+			complete_objective("reach_shivaji")
+			play_ending_cutscene()
+
+func play_ending_cutscene():
+	cutscene_playing = true
+	
+	# Disable player movement
+	if player:
+		player.disable_movement()
+	
+	# Create dialogue for Rajgad Fort scene
+	var rajgad_dialogue = [
+		{
+			"speaker": "Messenger",
+			"text": "Shivaji Maharaj, Afzal Khan has been appointed. He comes with over 20,000 men!"
+		},
+		{
+			"speaker": "Shivaji",
+			"text": "So, the butcher of temples seeks to add my head to his collection. We shall see who the hunter truly is."
+		},
+		{
+			"speaker": "Netoji Palkar",
+			"text": "My lord, his reputation is fearsome. Even the stones speak of his cruelty."
+		},
+		{
+			"speaker": "Shivaji",
+			"text": "Netoji, a reputation built on fear is like a palace built on sand. Gather our advisors. We have preparations to make."
+		}
+	]
+	
+	DialogueManager.start_dialogue_sequence(rajgad_dialogue)
+
+func _on_scout_area_entered(body: Node):
+	if body == player:
+		print("=== STEALTH SECTION ===")
+		print("You've entered a scout patrol area! Move carefully to avoid detection.")
+		current_story_beat = StoryBeat.STEALTH_SECTION
+		# Could add stealth mechanics here (crouching, slower movement, etc.)
+
+func _on_scout_area_exited(body: Node):
+	if body == player:
+		print("Scout area cleared! Well done avoiding detection.")
+		complete_objective("avoid_scouts")
 
 func complete_objective(objective_id: String):
-	var objective = get_objective_by_id(objective_id)
-	if objective:
-		objective.completed = true
-		update_objectives_display()
-		
-		# Check if all objectives are complete
-		check_level_completion()
-
-func get_objective_by_id(objective_id: String) -> Dictionary:
 	for objective in current_objectives:
-		if objective.id == objective_id:
-			return objective
-	return {}
-
-func check_level_completion():
-	var all_complete = true
-	for objective in current_objectives:
-		if not objective.completed:
-			all_complete = false
+		if objective.id == objective_id and not objective.completed:
+			objective.completed = true
+			print("✅ Objective completed: ", objective.text)
+			update_objectives_display()
 			break
-	
-	if all_complete:
-		complete_level()
-
-func complete_level():
-	# Play completion cutscene
-	play_cutscene("level_completion")
-	
-	# Award Shivkaari card
-	var card_data = level_data.completion_reward.shivkaari_card
-	GameManager.complete_level(1, card_data)
-	
-	# Show level complete UI
-	if level_complete_ui:
-		level_complete_ui.visible = true
-		level_complete_ui.setup_completion_screen(
-			level_data.name,
-			card_data.title,
-			card_data.description
-		)
 
 func update_objectives_display():
 	if not objectives_ui:
 		return
 	
-	var objective_texts = []
-	for objective in current_objectives:
-		var status = "✓" if objective.completed else "○"
-		objective_texts.append(status + " " + objective.text)
+	# Clear existing objective labels
+	var objectives_list = objectives_ui.get_node("Panel/VBox/ObjectivesList")
+	for child in objectives_list.get_children():
+		child.queue_free()
 	
-	objectives_ui.update_objectives(objective_texts)
-
-func _input(event):
-	if event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel"):
-		if not cutscene_playing:
-			# Save current progress before returning to menu
-			save_current_progress()
-			print("Returning to main menu (Press ESC or P)")
-			get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn")
-
-func save_current_progress():
-	# Save the current state of objectives for mid-level continuation
-	var completed_objectives = []
+	# Add current objectives
 	for objective in current_objectives:
+		var label = Label.new()
 		if objective.completed:
-			completed_objectives.append(objective.id)
+			label.text = "✅ " + objective.text
+			label.modulate = Color.GREEN
+		else:
+			label.text = "◯ " + objective.text
+			label.modulate = Color.WHITE
+		
+		label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		objectives_list.add_child(label)
+
+func complete_level():
+	print("=== LEVEL 1 COMPLETED ===")
 	
-	# Save player position
-	var player_position = Vector2(100, 500)  # Default start position
-	if player:
-		player_position = player.global_position
-	
-	var save_data = {
-		"current_level": 1,
-		"completed_objectives": completed_objectives,
-		"player_position": {"x": player_position.x, "y": player_position.y},
-		"timestamp": Time.get_unix_time_from_system()
+	# Show level complete UI with Shivkaari card
+	var card_data = {
+		"title": "Understanding the Enemy",
+		"description": "Shivaji's wisdom in gathering intelligence before acting",
+		"value": "Information is the foundation of strategy",
+		"explanation": "Before facing Afzal Khan, Shivaji spent months gathering intelligence through spies and messengers. This careful preparation was key to his victory."
 	}
 	
-	GameManager.player_progress["level_01_partial"] = save_data
-	print("Saving progress: ", save_data)
+	# Award the card and mark level as complete
+	GameManager.complete_level(1, card_data)
 	
-	var success = GameManager.save_game_data()
-	if success:
-		print("Progress saved successfully for Level 1")
-	else:
-		print("Failed to save progress!")
+	# Show completion UI
+	if level_complete_ui:
+		level_complete_ui.show_completion(card_data)
 
-func _on_level_complete_continue():
-	# For now, return to main menu. Later, advance to next level
-	get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn") 
+func _input(event):
+	# Handle level-specific inputs
+	if event.is_action_pressed("ui_cancel") and not cutscene_playing:
+		# Return to main menu
+		get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn") 

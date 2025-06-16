@@ -8,14 +8,14 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_1sxp4"]
 font = ExtResource("3_title_font")
-font_size = 64
+font_size = 84
 font_color = Color(0.1, 0.1, 0.4, 1)
 shadow_size = 2
 shadow_color = Color(1, 1, 1, 0.3)
 
 [sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
 font = ExtResource("4_subtitle_font")
-font_size = 24
+font_size = 32
 font_color = Color(0.2, 0.2, 0.5, 1)
 shadow_color = Color(1, 1, 1, 0.2)
 
@@ -41,14 +41,12 @@ stretch_mode = 6
 
 [node name="ShivajiPortrait" type="TextureRect" parent="."]
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -400.0
-offset_right = 500.0
-offset_bottom = 400.0
+anchors_preset = -1
+anchor_right = 0.4
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = ExtResource("5_shivaji_portrait")
 expand_mode = 1
 stretch_mode = 5
@@ -61,9 +59,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -200.0
-offset_top = -250.0
+offset_top = -280.0
 offset_right = 200.0
-offset_bottom = 250.0
+offset_bottom = 280.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -75,11 +73,13 @@ horizontal_alignment = 1
 
 [node name="SubtitleLabel" type="Label" parent="TitleContainer"]
 layout_mode = 2
-text = "Pratapgad Campaign"
+text = "The Pratapgad
+Campaign"
 label_settings = SubResource("LabelSettings_subtitle")
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="TitleContainer"]
+[node name="MenuSpacer" type="Control" parent="TitleContainer"]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
 [node name="MenuContainer" type="VBoxContainer" parent="TitleContainer"]
@@ -88,32 +88,32 @@ alignment = 1
 
 [node name="StartButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Start New Game"
 
 [node name="ContinueButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Continue"
 
 [node name="CardsButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Shivkaari Cards"
 
 [node name="SettingsButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Settings"
 
 [node name="CreditsButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Credits"
 
 [node name="QuitButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 24
 text = "Quit"
 
 [node name="FadeOverlay" type="ColorRect" parent="."]
@@ -124,6 +124,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="TitleAnimation" type="AnimationPlayer" parent="."]

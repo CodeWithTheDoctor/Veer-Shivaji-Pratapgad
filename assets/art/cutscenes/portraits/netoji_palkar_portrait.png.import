@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2n5r7naqwx"
-path="res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"
+uid="uid://da4fvt632tvhh"
+path="res://.godot/imported/netoji_palkar_portrait.png-7de3bbce12c1bcbdc3bd353babb5de57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/characters/shivaji/shivaji_idle.png"
-dest_files=["res://.godot/imported/shivaji_idle.png-933f34ed9564bd160da2fd1a028df73f.ctex"]
+source_file="res://assets/art/cutscenes/portraits/netoji_palkar_portrait.png"
+dest_files=["res://.godot/imported/netoji_palkar_portrait.png-7de3bbce12c1bcbdc3bd353babb5de57.ctex"]
 
 [params]
 

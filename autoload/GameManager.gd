@@ -36,6 +36,38 @@ func unlock_shivkaari_card(card_data: Dictionary):
 	unlocked_cards.append(card_data)
 	shivkaari_card_unlocked.emit(card_data)
 	print("Shivkaari Card Unlocked: ", card_data.get("title", "Unknown"))
+
+func get_unlocked_cards() -> Array:
+	# Return array of card IDs for the UI system
+	var card_ids: Array = []
+	for card in unlocked_cards:
+		var card_id = ""
+		# Map card titles to IDs based on the cards data structure
+		match card.get("title", ""):
+			"Understanding the Enemy":
+				card_id = "understanding_enemy"
+			"Strategic Preparation":
+				card_id = "strategic_preparation"
+			"Choosing the Battlefield":
+				card_id = "choosing_battlefield"
+			"Diplomatic Deception":
+				card_id = "diplomatic_deception"
+			"Loyalty and Trust":
+				card_id = "loyal_companions"
+			"Courage in Crisis":
+				card_id = "courage_in_crisis"
+			"Swift Victory":
+				card_id = "swift_victory"
+			"Compassionate Leadership":
+				card_id = "compassionate_leadership"
+		
+		if card_id != "":
+			card_ids.append(card_id)
+	
+	return card_ids
+
+func get_unlocked_cards_count() -> int:
+	return unlocked_cards.size()
 	
 func save_game_data() -> bool:
 	var save_data = {

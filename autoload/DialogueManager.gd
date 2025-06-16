@@ -35,8 +35,34 @@ func load_dialogue_data():
 		create_placeholder_dialogue_data()
 
 func create_placeholder_dialogue_data():
-	# Create some placeholder dialogue for testing
+	# Create dialogue data for Level 1 story beats
 	dialogue_data = {
+		"villager_fear": [
+			{
+				"speaker": "Worried Villager",
+				"text": "The giant from Bijapur comes with fire and sword! Have you heard the terrible news?"
+			},
+			{
+				"speaker": "Worried Villager", 
+				"text": "They say Afzal Khan destroys everything in his path. Our temples... our people... nothing is safe!"
+			}
+		],
+		"priest_temples": [
+			{
+				"speaker": "Village Priest",
+				"text": "Young messenger, tell Shivaji Maharaj that our temples burn. Only he can save our dharma."
+			},
+			{
+				"speaker": "Village Priest",
+				"text": "The destroyer of deities comes with an army of 20,000. But we have faith in our protector."
+			}
+		],
+		"shivaji_receives_news": [
+			{
+				"speaker": "Messenger",
+				"text": "Shivaji Maharaj, I bring urgent news from the villages!"
+			}
+		],
 		"test_dialogue": [
 			{
 				"speaker": "Narrator",
@@ -76,6 +102,15 @@ func start_dialogue(dialogue_id: String):
 	else:
 		print("Dialogue not found: ", dialogue_id)
 		print("Available dialogues: ", dialogue_data.keys())
+
+# New function to start dialogue from an array directly (for cutscenes)
+func start_dialogue_sequence(dialogue_lines: Array):
+	current_dialogue = dialogue_lines
+	current_line = 0
+	is_dialogue_active = true
+	dialogue_started.emit()
+	show_current_line()
+	print("Started dialogue sequence with ", dialogue_lines.size(), " lines")
 		
 func next_line():
 	if not is_dialogue_active:
