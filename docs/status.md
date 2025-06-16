@@ -222,3 +222,23 @@ veer-shivaji/
   - Added white shadows for better visibility
 
 - **Result**: Professional, readable typography throughout the entire game
+
+### **Hero Portrait & Cinematic Presentation - COMPLETED ✅**
+
+- **Shivaji Maharaj Portrait**: Large hero image positioned on left side of main menu
+  - Shows Shivaji looking into the distance, establishing him as the protagonist
+  - Positioned to complement menu options on the right
+  - Proper scaling and positioning for dramatic impact
+
+- **Cinematic Fade-In System**: Professional presentation sequence
+  - **Black Fade-In**: Screen starts completely black, fades to reveal menu (2 seconds)
+  - **Portrait Animation**: Shivaji portrait fades in with subtle slide effect (1.5 seconds, 0.5s delay)
+  - **Music Fade-In**: Audio starts quiet (-20db) and fades to full volume (2 seconds, 1s delay)
+  - **Parallel Animations**: All effects run simultaneously for smooth experience
+
+- **Visual Hierarchy**: Clear protagonist establishment
+  - Shivaji's portrait immediately identifies him as the main character
+  - Positioned to "look ahead" toward the adventure
+  - Creates emotional connection before gameplay begins
+
+- **Result**: Movie-quality presentation that establishes tone and protagonist
