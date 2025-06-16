@@ -89,27 +89,42 @@ func play_current_scene():
 	
 	var scene_data = current_cutscene_data.scenes[current_scene_index]
 	
+	# Ensure nodes are ready
+	if not background or not left_portrait or not right_portrait:
+		print("Cutscene nodes not ready, waiting...")
+		await get_tree().process_frame
+		return
+	
 	# Set background
-	if scene_data.has("background"):
+	if scene_data.has("background") and background:
 		var bg_texture = load(scene_data.background)
-		background.texture = bg_texture
-		print("Set background: ", scene_data.background)
+		if bg_texture:
+			background.texture = bg_texture
+			print("Set background: ", scene_data.background)
+		else:
+			print("Failed to load background: ", scene_data.background)
 	
 	# Set portraits
-	if scene_data.has("left_portrait"):
+	if scene_data.has("left_portrait") and left_portrait:
 		var left_texture = load(scene_data.left_portrait)
-		left_portrait.texture = left_texture
-		left_portrait.visible = true
-		print("Set left portrait: ", scene_data.left_portrait)
-	else:
+		if left_texture:
+			left_portrait.texture = left_texture
+			left_portrait.visible = true
+			print("Set left portrait: ", scene_data.left_portrait)
+		else:
+			print("Failed to load left portrait: ", scene_data.left_portrait)
+	elif left_portrait:
 		left_portrait.visible = false
 	
-	if scene_data.has("right_portrait"):
+	if scene_data.has("right_portrait") and right_portrait:
 		var right_texture = load(scene_data.right_portrait)
-		right_portrait.texture = right_texture
-		right_portrait.visible = true
-		print("Set right portrait: ", scene_data.right_portrait)
-	else:
+		if right_texture:
+			right_portrait.texture = right_texture
+			right_portrait.visible = true
+			print("Set right portrait: ", scene_data.right_portrait)
+		else:
+			print("Failed to load right portrait: ", scene_data.right_portrait)
+	elif right_portrait:
 		right_portrait.visible = false
 	
 	# Fade in
@@ -121,12 +136,16 @@ func play_current_scene():
 		DialogueManager.start_dialogue(scene_data.dialogue_id)
 
 func fade_in():
+	if not fade_overlay:
+		return
 	var tween = create_tween()
 	tween.tween_property(fade_overlay, "color", Color(0, 0, 0, 0), 1.0)
 	await tween.finished
 	fade_overlay.visible = false
 
 func fade_out():
+	if not fade_overlay:
+		return
 	fade_overlay.visible = true
 	fade_overlay.color = Color(0, 0, 0, 0)
 	var tween = create_tween()

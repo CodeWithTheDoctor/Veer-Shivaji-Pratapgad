@@ -213,11 +213,18 @@ func play_opening_cutscene():
 	var cutscene_scene = preload("res://scenes/cutscenes/CutscenePlayer.tscn")
 	var cutscene_player = cutscene_scene.instantiate()
 	
-	# Add to scene tree
-	get_tree().current_scene.add_child(cutscene_player)
-	
-	# Connect signal
+	# Connect signal before adding to tree
 	cutscene_player.cutscene_finished.connect(_on_opening_cutscene_finished)
+	
+	# Defer adding to root to avoid busy parent issues
+	get_tree().root.add_child.call_deferred(cutscene_player)
+	
+	# Wait a frame then start cutscene and move to front
+	await get_tree().process_frame
+	
+	# Move cutscene player to front (highest z-index)
+	if cutscene_player.get_parent():
+		get_tree().root.move_child(cutscene_player, -1)
 	
 	# Start the cutscene
 	cutscene_player.play_cutscene("opening_bijapur_court")
@@ -232,11 +239,18 @@ func play_ending_cutscene():
 	var cutscene_scene = preload("res://scenes/cutscenes/CutscenePlayer.tscn")
 	var cutscene_player = cutscene_scene.instantiate()
 	
-	# Add to scene tree
-	get_tree().current_scene.add_child(cutscene_player)
-	
-	# Connect signal
+	# Connect signal before adding to tree
 	cutscene_player.cutscene_finished.connect(_on_ending_cutscene_finished)
+	
+	# Defer adding to root to avoid busy parent issues
+	get_tree().root.add_child.call_deferred(cutscene_player)
+	
+	# Wait a frame then start cutscene and move to front
+	await get_tree().process_frame
+	
+	# Move cutscene player to front (highest z-index)
+	if cutscene_player.get_parent():
+		get_tree().root.move_child(cutscene_player, -1)
 	
 	# Start the cutscene
 	cutscene_player.play_cutscene("ending_rajgad_fort")
@@ -247,10 +261,11 @@ func play_ending_cutscene():
 func _on_opening_cutscene_finished(next_scene: String):
 	print("Opening cutscene finished, transitioning to: ", next_scene)
 	
-	# Remove cutscene player
-	var cutscene_player = get_tree().get_nodes_in_group("cutscene_player")
-	if cutscene_player.size() > 0:
-		cutscene_player[0].queue_free()
+	# Remove cutscene player from root
+	for child in get_tree().root.get_children():
+		if child.name == "CutscenePlayer":
+			child.queue_free()
+			break
 	
 	# Resume gameplay
 	set_gameplay_active(true)
@@ -262,10 +277,11 @@ func _on_opening_cutscene_finished(next_scene: String):
 func _on_ending_cutscene_finished(next_scene: String):
 	print("Ending cutscene finished, transitioning to: ", next_scene)
 	
-	# Remove cutscene player
-	var cutscene_player = get_tree().get_nodes_in_group("cutscene_player")
-	if cutscene_player.size() > 0:
-		cutscene_player[0].queue_free()
+	# Remove cutscene player from root
+	for child in get_tree().root.get_children():
+		if child.name == "CutscenePlayer":
+			child.queue_free()
+			break
 	
 	# Complete level
 	complete_level()
