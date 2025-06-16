@@ -112,9 +112,12 @@ veer-shivaji/
 - [x] Create Shivaji character sprite (walking animation) ✅ **COMPLETED**
 - [x] Create Shivaji idle animation ✅ **COMPLETED**
 - [x] Integrate sprites into Godot project ✅ **COMPLETED**
-- [ ] Design 3 NPC sprites (distinct visual designs)
+- [x] Integrate Advisor NPC sprite ✅ **COMPLETED**
+- [ ] Create Spy/Merchant NPC sprite
+- [ ] Create Netaji Palkar NPC sprite
 - [ ] Create basic platform tiles and backgrounds
-- [ ] Add jump sound effect and background music
+- [x] Add main menu background music playlist ✅ **COMPLETED**
+- [ ] Add jump sound effect and in-game background music
 - [ ] Implement Level 2 basic structure
 
 ### **Development Tools Needed:**
@@ -127,8 +130,8 @@ veer-shivaji/
 
 - **Core Gameplay**: ✅ 100% Complete
 - **Story Content**: ✅ 20% Complete (1/9 levels)
-- **Visual Assets**: 🔄 25% Complete (Shivaji sprites integrated)
-- **Audio Integration**: 🔄 5% Complete (framework only)
+- **Visual Assets**: 🔄 60% Complete (Shivaji + Advisor sprites, main menu background, EB Garamond typography, hero portrait)
+- **Audio Integration**: 🔄 25% Complete (main menu playlist system working)
 - **Educational Features**: ✅ 80% Complete (cards system working)
 
 ---
@@ -171,3 +174,51 @@ veer-shivaji/
 - **Solution**: Implemented pending objective system that waits for dialogue to end
 - **Result**: Smooth, uninterrupted storytelling experience
 - **Status**: Perfect narrative timing achieved
+
+### **Interaction Polish - COMPLETED ✅**
+
+- **Enhancement**: NPCs now turn to face player when interacting
+- **Implementation**: Automatic sprite flipping based on player position
+- **Result**: More natural and engaging character interactions
+- **Status**: All NPCs respond to player presence
+
+### **Main Menu Music System - COMPLETED ✅**
+
+- **Feature**: Two-track playlist system for main menu
+- **Implementation**: Alternating music tracks (main-menu-1.mp3 → main-menu-2.mp3 → loop)
+- **Integration**: AudioManager enhanced with playlist functionality and automatic track advancement
+- **Result**: Professional background music experience with seamless looping
+- **Status**: Music starts on menu load, stops cleanly when entering game
+
+### **Main Menu Visual Enhancement - COMPLETED ✅**
+
+- **Feature**: Custom background image for main menu
+- **Implementation**: Replaced solid color background with main-menu-bg.png
+- **Integration**: TextureRect with proper scaling and stretch modes for responsive display
+- **Result**: Professional visual presentation with custom artwork
+- **Status**: Background image displays correctly across different screen sizes
+
+### **Typography System Overhaul - COMPLETED ✅**
+
+- **Font Sizes Increased**: All text throughout game made larger for better readability
+  - Main menu title: 48px → 64px
+  - Main menu buttons: default → 18px
+  - Objectives title: default → 24px
+  - Objectives text: 16px → 20px
+  - Dialogue speaker: default → 22px
+  - Dialogue text: default → 18px
+  - Level complete title: 28px → 36px
+  - NPC interaction prompts: 12px → 16px
+
+- **EB Garamond Integration**: Professional serif font for all titles
+  - Main menu title and subtitle now use EB Garamond Bold/Regular
+  - Level completion screens use EB Garamond Bold
+  - Objectives titles use EB Garamond Bold
+  - Added subtle text shadows for better contrast
+
+- **Color Improvements**: Fixed contrast issues on teal background
+  - Title: Changed from orange (0.8, 0.6, 0.2) to dark blue (0.1, 0.1, 0.4)
+  - Subtitle: Added dark blue (0.2, 0.2, 0.5) with proper sizing
+  - Added white shadows for better visibility
+
+- **Result**: Professional, readable typography throughout the entire game

@@ -58,8 +58,13 @@ func setup_completion_screen(level_name: String, card_name: String, card_desc: S
     if level_title:
         level_title.text = "🏆 " + level_name + " - Complete! 🏆"
         level_title.add_theme_color_override("font_color", Color(1.0, 0.9, 0.3, 1.0))  # Bright gold
-        level_title.add_theme_font_size_override("font_size", 28)
+        level_title.add_theme_font_size_override("font_size", 36)
         level_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+        
+        # Add EB Garamond font
+        var eb_garamond_bold = load("res://assets/fonts/EB_Garamond/static/EBGaramond-Bold.ttf")
+        if eb_garamond_bold:
+            level_title.add_theme_font_override("font", eb_garamond_bold)
         
         # Add text shadow effect
         level_title.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
@@ -69,14 +74,14 @@ func setup_completion_screen(level_name: String, card_name: String, card_desc: S
     if completion_text:
         completion_text.text = "🎉 Excellent work, Shivaji Raje! You have successfully completed this mission.\n\nYour strategic wisdom and courage have guided you through the first challenge."
         completion_text.add_theme_color_override("font_color", Color(0.9, 0.9, 1.0, 1.0))  # Light blue-white
-        completion_text.add_theme_font_size_override("font_size", 16)
+        completion_text.add_theme_font_size_override("font_size", 20)
         completion_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         completion_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
     
     if card_title:
         card_title.text = "📜 Shivkaari Card Unlocked: " + card_name + " 📜"
         card_title.add_theme_color_override("font_color", Color(1.0, 0.8, 0.2, 1.0))  # Rich yellow
-        card_title.add_theme_font_size_override("font_size", 20)
+        card_title.add_theme_font_size_override("font_size", 26)
         card_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         
         # Add glow effect
@@ -87,7 +92,7 @@ func setup_completion_screen(level_name: String, card_name: String, card_desc: S
     if card_description:
         card_description.text = "✨ " + card_desc + " ✨"
         card_description.add_theme_color_override("font_color", Color(0.8, 0.9, 1.0, 1.0))  # Light cyan
-        card_description.add_theme_font_size_override("font_size", 14)
+        card_description.add_theme_font_size_override("font_size", 18)
         card_description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
         card_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 

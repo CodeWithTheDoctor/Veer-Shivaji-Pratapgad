@@ -7,12 +7,15 @@ extends Control
 @onready var credits_button = $TitleContainer/MenuContainer/CreditsButton
 @onready var quit_button = $TitleContainer/MenuContainer/QuitButton
 
+@onready var shivaji_portrait = $ShivajiPortrait
+@onready var fade_overlay = $FadeOverlay
 @onready var title_animation = $TitleAnimation
 @onready var background_animation = $BackgroundAnimation
 
 func _ready():
 	setup_menu()
 	play_intro_animation()
+	start_main_menu_music()
 
 func setup_menu():
 	# Connect button signals
@@ -32,10 +35,36 @@ func setup_menu():
 	start_button.grab_focus()
 
 func play_intro_animation():
-	# Simple fade-in animation for now
-	modulate.a = 0.0
+	# Start with everything hidden behind black overlay
+	fade_overlay.color = Color(0, 0, 0, 1)
+	shivaji_portrait.modulate.a = 0.0
+	
+	# Create comprehensive fade-in sequence
 	var tween = create_tween()
-	tween.tween_property(self, "modulate:a", 1.0, 1.0)
+	tween.set_parallel(true)  # Allow multiple animations to run simultaneously
+	
+	# Fade out the black overlay (fade in from black)
+	tween.tween_property(fade_overlay, "color:a", 0.0, 2.0)
+	
+	# Fade in Shivaji portrait with slight delay for dramatic effect
+	tween.tween_property(shivaji_portrait, "modulate:a", 1.0, 1.5).set_delay(0.5)
+	
+	# Add subtle slide-in effect for the portrait
+	shivaji_portrait.position.x = -150  # Start slightly more to the left
+	tween.tween_property(shivaji_portrait, "position:x", -100, 1.5).set_delay(0.5)
+	
+	print("Main menu fade-in animation started")
+
+func start_main_menu_music():
+	# Start the main menu playlist with fade-in effect
+	AudioManager.play_main_menu_music()
+	
+	# Fade in the music volume
+	AudioManager.music_player.volume_db = -20  # Start quieter
+	var music_tween = create_tween()
+	music_tween.tween_property(AudioManager.music_player, "volume_db", 0, 2.0).set_delay(1.0)
+	
+	print("Main menu music playlist started with fade-in")
 
 func _on_start_pressed():
 	AudioManager.play_sfx("menu_select")
@@ -63,6 +92,9 @@ func _on_quit_pressed():
 
 func start_new_game():
 	print("Starting new game...")
+	# Stop main menu music
+	AudioManager.stop_playlist()
+	
 	GameManager.current_level = 1
 	# Clear any existing progress for fresh start
 	GameManager.reset_progress()
@@ -73,6 +105,9 @@ func start_new_game():
 
 func continue_game():
 	print("Continuing game...")
+	# Stop main menu music
+	AudioManager.stop_playlist()
+	
 	GameManager.load_game_data()
 	# Set flag to indicate this is continuing from save
 	GameManager.is_continuing_game = true

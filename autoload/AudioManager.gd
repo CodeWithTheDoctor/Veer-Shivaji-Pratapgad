@@ -11,6 +11,11 @@ var voice_clips: Dictionary = {}
 var current_music: String = ""
 var music_fade_duration: float = 2.0
 
+# Playlist functionality
+var current_playlist: Array[String] = []
+var current_playlist_index: int = 0
+var is_playlist_playing: bool = false
+
 func _ready():
 	add_child(music_player)
 	add_child(sfx_player)
@@ -21,12 +26,17 @@ func _ready():
 	sfx_player.name = "SFXPlayer"
 	voice_player.name = "VoicePlayer"
 	
+	# Connect music player finished signal for playlist functionality
+	music_player.finished.connect(_on_music_finished)
+	
 	load_audio_resources()
 	apply_volume_settings()
 	
 func load_audio_resources():
-	# Load music tracks (will be populated when assets are available)
+	# Load music tracks
 	music_tracks = {
+		"main_menu_1": load_audio_resource("res://assets/audio/music/main-menu-1.mp3"),
+		"main_menu_2": load_audio_resource("res://assets/audio/music/main-menu-2.mp3"),
 		"main_theme": null, # load("res://assets/audio/music/main_theme.ogg"),
 		"preparation": null, # load("res://assets/audio/music/preparation.ogg"),
 		"combat": null, # load("res://assets/audio/music/combat.ogg"),
@@ -115,4 +125,58 @@ func load_audio_resource(path: String) -> AudioStream:
 		return load(path)
 	else:
 		print("Audio file not found: ", path)
-		return null 
+		return null
+
+# Playlist functionality
+func play_playlist(track_names: Array[String]):
+	if track_names.size() == 0:
+		print("Cannot play empty playlist")
+		return
+	
+	current_playlist = track_names
+	current_playlist_index = 0
+	is_playlist_playing = true
+	
+	print("Starting playlist: ", track_names)
+	_play_current_playlist_track()
+
+func _play_current_playlist_track():
+	if not is_playlist_playing or current_playlist.size() == 0:
+		return
+	
+	var track_name = current_playlist[current_playlist_index]
+	if music_tracks.has(track_name) and music_tracks[track_name] != null:
+		music_player.stream = music_tracks[track_name]
+		music_player.play()
+		current_music = track_name
+		print("Playing playlist track: ", track_name, " (", current_playlist_index + 1, "/", current_playlist.size(), ")")
+	else:
+		print("Playlist track not found: ", track_name)
+		_advance_playlist()
+
+func _on_music_finished():
+	if is_playlist_playing:
+		_advance_playlist()
+
+func _advance_playlist():
+	if not is_playlist_playing or current_playlist.size() == 0:
+		return
+	
+	# Move to next track, loop back to start if at end
+	current_playlist_index = (current_playlist_index + 1) % current_playlist.size()
+	print("Advancing to next playlist track: ", current_playlist_index)
+	
+	# Small delay before playing next track
+	await get_tree().create_timer(0.5).timeout
+	_play_current_playlist_track()
+
+func stop_playlist():
+	is_playlist_playing = false
+	current_playlist.clear()
+	current_playlist_index = 0
+	stop_music()
+	print("Playlist stopped")
+
+# Convenience function for main menu
+func play_main_menu_music():
+	play_playlist(["main_menu_1", "main_menu_2"]) 

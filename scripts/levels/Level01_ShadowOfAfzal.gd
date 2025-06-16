@@ -64,6 +64,19 @@ func create_npcs():
 		npc.npc_name = npc_data.name
 		npc.dialogue_id = npc_data.dialogue_id
 		npc.interaction_text = npc_data.interaction_text
+		
+		# Assign specific sprites for each NPC
+		match npc_data.id:
+			"advisor":
+				npc.sprite_texture = load("res://assets/art/characters/advisor/advisor-idle.png")
+				print("Assigned advisor sprite to advisor NPC")
+			"spy_merchant":
+				# Will use placeholder for now (blue rectangle)
+				print("Spy merchant using placeholder sprite")
+			"netaji_palkar":
+				# Will use placeholder for now (blue rectangle)
+				print("Netaji Palkar using placeholder sprite")
+		
 		# Store the NPC ID in the NPC for later reference
 		npc.set_meta("npc_id", npc_data.id)
 		npc.npc_interacted.connect(_on_npc_interacted)

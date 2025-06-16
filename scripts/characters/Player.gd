@@ -21,6 +21,8 @@ signal interacted_with_object(object: Node)
 
 func _ready():
 	setup_character()
+	# Add player to group so NPCs can find it easily
+	add_to_group("player")
 	
 func setup_character():
 	# Set up basic collision shape if not already set

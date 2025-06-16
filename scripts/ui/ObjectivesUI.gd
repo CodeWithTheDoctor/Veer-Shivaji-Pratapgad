@@ -15,6 +15,12 @@ func setup_ui():
     if title_label:
         title_label.text = "Objectives"
         title_label.add_theme_color_override("font_color", Color.YELLOW)
+        title_label.add_theme_font_size_override("font_size", 24)
+        
+        # Add EB Garamond font
+        var eb_garamond_bold = load("res://assets/fonts/EB_Garamond/static/EBGaramond-Bold.ttf")
+        if eb_garamond_bold:
+            title_label.add_theme_font_override("font", eb_garamond_bold)
     
     # Position panel in top-left corner
     if objectives_panel:
@@ -43,7 +49,7 @@ func update_objectives(objective_texts: Array):
         var label = Label.new()
         label.text = text
         label.add_theme_color_override("font_color", Color.WHITE)
-        label.add_theme_font_size_override("font_size", 16)
+        label.add_theme_font_size_override("font_size", 20)
         label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
         label.custom_minimum_size = Vector2(360, 0)
         

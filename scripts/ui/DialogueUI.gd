@@ -12,12 +12,29 @@ func _ready():
 	visible = false
 	dialogue_visible = false
 	
+	# Set up font sizes
+	setup_font_sizes()
+	
 	# Connect to DialogueManager signals
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	DialogueManager.dialogue_line_changed.connect(_on_dialogue_line_changed)
 	
 	print("DialogueUI initialized")
+
+func setup_font_sizes():
+	# Increase font sizes for better readability
+	if speaker_label:
+		speaker_label.add_theme_font_size_override("font_size", 22)
+		speaker_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.3, 1.0))  # Golden color
+	
+	if dialogue_text:
+		dialogue_text.add_theme_font_size_override("normal_font_size", 18)
+		dialogue_text.add_theme_color_override("default_color", Color(0.95, 0.95, 0.95, 1.0))  # Light gray
+	
+	if continue_hint:
+		continue_hint.add_theme_font_size_override("font_size", 14)
+		continue_hint.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1.0))  # Dimmed
 
 func _on_dialogue_started():
 	show_dialogue_ui()

@@ -1,10 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjm7qhkwxhxm6"]
+[gd_scene load_steps=8 format=3 uid="uid://cjm7qhkwxhxm6"]
 
 [ext_resource type="Script" uid="uid://qipguhnbxm25" path="res://scenes/main_menu/MainMenu.gd" id="1_5hxm4"]
+[ext_resource type="Texture2D" uid="uid://bom2sfcb4u32f" path="res://assets/art/ui/main-menu-bg.png" id="2_bg_texture"]
+[ext_resource type="FontFile" uid="uid://whleu8n62eg" path="res://assets/fonts/EB_Garamond/static/EBGaramond-Bold.ttf" id="3_title_font"]
+[ext_resource type="FontFile" uid="uid://c0bcyxcwoyxkr" path="res://assets/fonts/EB_Garamond/static/EBGaramond-Regular.ttf" id="4_subtitle_font"]
+[ext_resource type="Texture2D" uid="uid://cdm50euaxj3un" path="res://assets/art/ui/shivaji-main-menu.png" id="5_shivaji_portrait"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1sxp4"]
-font_size = 48
-font_color = Color(0.8, 0.6, 0.2, 1)
+font = ExtResource("3_title_font")
+font_size = 64
+font_color = Color(0.1, 0.1, 0.4, 1)
+shadow_size = 2
+shadow_color = Color(1, 1, 1, 0.3)
+
+[sub_resource type="LabelSettings" id="LabelSettings_subtitle"]
+font = ExtResource("4_subtitle_font")
+font_size = 24
+font_color = Color(0.2, 0.2, 0.5, 1)
+shadow_color = Color(1, 1, 1, 0.2)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -15,14 +28,30 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_5hxm4")
 
-[node name="BackgroundContainer" type="Panel" parent="."]
-self_modulate = Color(0.2, 0.15, 0.1, 1)
+[node name="BackgroundImage" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_bg_texture")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="ShivajiPortrait" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -400.0
+offset_right = 500.0
+offset_bottom = 400.0
+grow_vertical = 2
+texture = ExtResource("5_shivaji_portrait")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="TitleContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -47,6 +76,7 @@ horizontal_alignment = 1
 [node name="SubtitleLabel" type="Label" parent="TitleContainer"]
 layout_mode = 2
 text = "Pratapgad Campaign"
+label_settings = SubResource("LabelSettings_subtitle")
 horizontal_alignment = 1
 
 [node name="HSeparator" type="HSeparator" parent="TitleContainer"]
@@ -58,27 +88,43 @@ alignment = 1
 
 [node name="StartButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Start New Game"
 
 [node name="ContinueButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Continue"
 
 [node name="CardsButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Shivkaari Cards"
 
 [node name="SettingsButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Settings"
 
 [node name="CreditsButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Credits"
 
 [node name="QuitButton" type="Button" parent="TitleContainer/MenuContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 text = "Quit"
+
+[node name="FadeOverlay" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+z_index = 100
 
 [node name="TitleAnimation" type="AnimationPlayer" parent="."]
 
