@@ -258,5 +258,83 @@
             "speaker": "Shivaji",
             "text": "Rest now, faithful messenger. You have served Swarajya well. The real battle begins now..."
         }
+    ],
+    "shivaji_receives_news": [
+        {
+            "speaker": "Messenger",
+            "text": "Shivaji Maharaj, I bring urgent news from the villages!"
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Speak, brave messenger. What word do you bring from our people?"
+        },
+        {
+            "speaker": "Messenger",
+            "text": "Afzal Khan has been appointed by the Sultan to march against you! His army numbers in the tens of thousands!"
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "I see. And what of the people? How do they fare under this threat?"
+        },
+        {
+            "speaker": "Messenger",
+            "text": "The villagers are terrified, Maharaj. They have heard tales of his cruelty and the destruction of sacred places."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "Fear is the weapon of tyrants. We shall not let it defeat us. Thank you for this crucial intelligence."
+        },
+        {
+            "speaker": "Shivaji",
+            "text": "You have done well, messenger. Now I must prepare. The storm approaches, but we shall weather it with wisdom and courage."
+        }
+    ],
+    "villager_fear": [
+        {
+            "speaker": "Worried Villager",
+            "text": "Oh, traveler! Have you heard the terrible news?"
+        },
+        {
+            "speaker": "Messenger",
+            "text": "What troubles you, good villager?"
+        },
+        {
+            "speaker": "Worried Villager",
+            "text": "Afzal Khan approaches with a massive army! They say he destroys temples and shows no mercy to anyone!"
+        },
+        {
+            "speaker": "Messenger",
+            "text": "These are indeed dark times. But have faith - Shivaji Maharaj will protect us."
+        },
+        {
+            "speaker": "Worried Villager",
+            "text": "I pray you are right. Please, if you see our Maharaj, tell him of our fears. We need his protection."
+        }
+    ],
+    "priest_temples": [
+        {
+            "speaker": "Temple Priest",
+            "text": "Blessings upon you, child. These are troubled times for our faith."
+        },
+        {
+            "speaker": "Messenger",
+            "text": "What has happened, revered priest?"
+        },
+        {
+            "speaker": "Temple Priest",
+            "text": "Word reaches us of temples being destroyed by Afzal Khan's forces. Sacred places reduced to rubble."
+        },
+        {
+            "speaker": "Messenger",
+            "text": "Such desecration wounds the very soul. But dharma will prevail."
+        },
+        {
+            "speaker": "Temple Priest",
+            "text": "Indeed. Shivaji Maharaj is our hope. He fights not just for territory, but for our way of life itself."
+        },
+        {
+            "speaker": "Temple Priest",
+            "text": "Go with the blessings of the divine. May your journey be safe, and may righteousness triumph."
+        }
     ]
 }

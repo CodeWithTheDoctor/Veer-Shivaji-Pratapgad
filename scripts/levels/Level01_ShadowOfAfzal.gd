@@ -18,6 +18,7 @@ var areas: Array = []
 var level_started: bool = false
 var current_story_beat: int = 0
 var pending_objective_completion: String = ""
+var cutscene_playing: bool = false
 
 # Story progression states
 enum StoryBeat {
@@ -30,9 +31,21 @@ enum StoryBeat {
 }
 
 func _ready():
+	reset_level_state()
 	load_level_data()
 	setup_level()
 	start_level()
+
+func reset_level_state():
+	# Reset all level state variables
+	level_started = false
+	current_story_beat = 0
+	pending_objective_completion = ""
+	cutscene_playing = false
+	current_objectives.clear()
+	npcs.clear()
+	areas.clear()
+	print("Level state reset for fresh start")
 
 func load_level_data():
 	# Create Level 1 data based on story-plan.md
@@ -69,7 +82,7 @@ func load_level_data():
 			{
 				"id": "worried_villager",
 				"name": "Worried Villager",
-				"position": {"x": 200, "y": 470},  # Ground level (550 - 80 for character height)
+				"position": {"x": 250, "y": 460},  # Ground level (550 - 80 for character height)
 				"dialogue_id": "villager_fear",
 				"interaction_text": "Press E to talk to villager"
 			},
@@ -84,7 +97,7 @@ func load_level_data():
 				"id": "shivaji",
 				"name": "Chhatrapati Shivaji Maharaj",
 				"position": {"x": 900, "y": 140},  # Platform3 level (220 - 80 for character height)
-				"dialogue_id": "shivaji_receives_news",
+				"dialogue_id": "",  # No dialogue - triggers cutscene instead
 				"interaction_text": "Press E to deliver message"
 			}
 		],
@@ -152,7 +165,9 @@ func create_story_npcs():
 				var shivaji_sheet = load("res://assets/art/characters/shivaji/shivaji_idle.png")
 				npc.sprite_texture = shivaji_sheet
 				npc.use_animation = true  # Enable animation for Shivaji
-				print("Created Shivaji NPC with animated idle sprite (4x3 grid, 5 FPS) at Rajgad Fort")
+				# IMPORTANT: Clear dialogue_id for Shivaji so it doesn't trigger dialogue
+				npc.dialogue_id = ""  # No dialogue - will trigger cutscene instead
+				print("Created Shivaji NPC with animated idle sprite (4x3 grid, 5 FPS) at Rajgad Fort - NO DIALOGUE")
 		
 		npc.set_meta("npc_id", npc_data.id)
 		npc.npc_interacted.connect(_on_npc_interacted)
@@ -233,30 +248,67 @@ func play_opening_cutscene():
 	set_gameplay_active(false)
 
 func play_ending_cutscene():
-	print("Starting ending cutscene...")
+	print("🎬 === PLAY_ENDING_CUTSCENE CALLED ===")
+	
+	# Prevent multiple cutscene triggers
+	if cutscene_playing:
+		print("❌ Cutscene already playing, ignoring trigger")
+		return
+	
+	# Check if cutscene player already exists
+	for child in get_tree().root.get_children():
+		if child.name == "CutscenePlayer":
+			print("❌ CutscenePlayer already exists, ignoring trigger")
+			return
+	
+	print("✅ Starting ending cutscene...")
+	cutscene_playing = true
 	
 	# Load and instantiate cutscene player
+	print("📁 Loading CutscenePlayer.tscn...")
 	var cutscene_scene = preload("res://scenes/cutscenes/CutscenePlayer.tscn")
+	print("📁 Instantiating cutscene player...")
 	var cutscene_player = cutscene_scene.instantiate()
+	print("📁 Cutscene player created: ", cutscene_player)
 	
 	# Connect signal before adding to tree
+	print("🔗 Connecting cutscene_finished signal...")
 	cutscene_player.cutscene_finished.connect(_on_ending_cutscene_finished)
 	
 	# Defer adding to root to avoid busy parent issues
+	print("🌳 Adding cutscene player to root...")
 	get_tree().root.add_child.call_deferred(cutscene_player)
 	
-	# Wait a frame then start cutscene and move to front
+	# Wait multiple frames to ensure proper tree setup
+	print("⏳ Waiting for tree setup...")
+	await get_tree().process_frame
 	await get_tree().process_frame
 	
+	# Verify cutscene player is properly in tree before proceeding
+	if not cutscene_player.get_parent():
+		print("❌ ERROR: CutscenePlayer not properly added to tree")
+		cutscene_playing = false
+		return
+	
+	print("✅ CutscenePlayer successfully added to tree")
+	print("🌳 Parent: ", cutscene_player.get_parent())
+	print("🌳 Root children count: ", get_tree().root.get_child_count())
+	
 	# Move cutscene player to front (highest z-index)
-	if cutscene_player.get_parent():
-		get_tree().root.move_child(cutscene_player, -1)
+	print("📍 Moving cutscene player to front...")
+	get_tree().root.move_child(cutscene_player, -1)
 	
-	# Start the cutscene
-	cutscene_player.play_cutscene("ending_rajgad_fort")
-	
-	# Pause gameplay during cutscene
-	set_gameplay_active(false)
+	# Additional safety check before starting cutscene
+	if cutscene_player.get_tree():
+		print("🎬 Starting cutscene: ending_rajgad_fort")
+		cutscene_player.play_cutscene("ending_rajgad_fort")
+		# Pause gameplay during cutscene
+		print("⏸️ Pausing gameplay...")
+		set_gameplay_active(false)
+		print("🎬 Cutscene should now be playing!")
+	else:
+		print("❌ ERROR: CutscenePlayer not in scene tree, cannot start cutscene")
+		cutscene_playing = false
 
 func _on_opening_cutscene_finished(next_scene: String):
 	print("Opening cutscene finished, transitioning to: ", next_scene)
@@ -266,6 +318,9 @@ func _on_opening_cutscene_finished(next_scene: String):
 		if child.name == "CutscenePlayer":
 			child.queue_free()
 			break
+	
+	# Small delay to ensure cutscene cleanup is complete
+	await get_tree().create_timer(0.1).timeout
 	
 	# Resume gameplay
 	set_gameplay_active(true)
@@ -277,11 +332,17 @@ func _on_opening_cutscene_finished(next_scene: String):
 func _on_ending_cutscene_finished(next_scene: String):
 	print("Ending cutscene finished, transitioning to: ", next_scene)
 	
+	# Reset cutscene playing flag
+	cutscene_playing = false
+	
 	# Remove cutscene player from root
 	for child in get_tree().root.get_children():
 		if child.name == "CutscenePlayer":
 			child.queue_free()
 			break
+	
+	# Small delay to ensure cutscene cleanup is complete
+	await get_tree().create_timer(0.1).timeout
 	
 	# Complete level
 	complete_level()
@@ -291,6 +352,7 @@ func set_gameplay_active(active: bool):
 	if player:
 		player.set_physics_process(active)
 		player.set_process_input(active)
+		player.visible = active  # Hide player during cutscenes
 	
 	if camera:
 		camera.enabled = active
@@ -298,8 +360,19 @@ func set_gameplay_active(active: bool):
 	# Hide/show UI during cutscenes
 	if objectives_ui:
 		objectives_ui.visible = active
+	
+	# Hide the entire level during cutscenes
+	if not active:
+		modulate = Color(0, 0, 0, 0)  # Make level transparent
+	else:
+		modulate = Color(1, 1, 1, 1)  # Restore level visibility
 
 func _on_dialogue_ended():
+	# Prevent multiple dialogue end processing
+	if cutscene_playing:
+		print("Cutscene already playing, ignoring dialogue end")
+		return
+	
 	# Handle pending objective completion after dialogue ends
 	if pending_objective_completion != "":
 		complete_objective(pending_objective_completion)
@@ -317,6 +390,11 @@ func _on_dialogue_ended():
 			complete_level()
 
 func _on_npc_interacted(npc: Node):
+	# Prevent interactions during cutscenes or if dialogue is already active
+	if cutscene_playing or DialogueManager.is_dialogue_active:
+		print("Cutscene playing or dialogue active, ignoring NPC interaction")
+		return
+	
 	var npc_id = npc.get_meta("npc_id", "")
 	print("Player interacted with NPC: ", npc_id)
 	
@@ -331,11 +409,22 @@ func _on_npc_interacted(npc: Node):
 				pending_objective_completion = "talk_to_villagers"
 				print("Talked to priest - will complete objective after dialogue")
 		"shivaji":
+			print("=== SHIVAJI INTERACTION DEBUG ===")
+			print("Objective 'reach_shivaji' completed: ", is_objective_completed("reach_shivaji"))
+			print("Cutscene playing flag: ", cutscene_playing)
+			print("DialogueManager active: ", DialogueManager.is_dialogue_active)
+			
 			if not is_objective_completed("reach_shivaji"):
-				# Skip regular dialogue and go straight to ending cutscene
-				print("Reached Shivaji - starting ending cutscene")
+				# Complete objective and immediately trigger ending cutscene
+				complete_objective("reach_shivaji")
+				print("✅ Completed reach_shivaji objective")
+				print("🎬 About to call play_ending_cutscene()")
 				play_ending_cutscene()
-				return
+				print("🎬 play_ending_cutscene() call completed")
+				return  # Don't start dialogue, go straight to cutscene
+			else:
+				# If already completed, just play regular dialogue
+				print("Talking to Shivaji again - playing regular dialogue")
 
 func is_objective_completed(objective_id: String) -> bool:
 	for objective in current_objectives:
@@ -401,10 +490,23 @@ func complete_level():
 	
 	# Show completion UI
 	if level_complete_ui:
-		level_complete_ui.show_completion(card_data)
+		level_complete_ui.setup_completion_screen(
+			"The Shadow of Afzal Khan",
+			card_data.title,
+			card_data.description
+		)
+		level_complete_ui.show_completion()
 
 func _input(event):
-	# Handle level-specific inputs
+	# Only handle ESC if no cutscene is currently playing
 	if event.is_action_pressed("ui_cancel"):
-		# Return to main menu
-		get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn") 
+		# Check if there's an active cutscene player
+		var cutscene_active = false
+		for child in get_tree().root.get_children():
+			if child.name == "CutscenePlayer":
+				cutscene_active = true
+				break
+		
+		# Only return to main menu if no cutscene is active
+		if not cutscene_active:
+			get_tree().change_scene_to_file("res://scenes/main_menu/MainMenu.tscn") 

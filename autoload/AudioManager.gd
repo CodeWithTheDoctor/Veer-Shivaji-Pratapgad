@@ -41,13 +41,22 @@ func load_audio_resources():
 		"preparation": null, # load("res://assets/audio/music/preparation.ogg"),
 		"combat": null, # load("res://assets/audio/music/combat.ogg"),
 		"victory": null, # load("res://assets/audio/music/victory.ogg"),
-		"javali_valley": null # load("res://assets/audio/music/javali_valley.ogg")
+		"javali_valley": null, # load("res://assets/audio/music/javali_valley.ogg")
+		# Cutscene-specific music
+		"bijapur_court_theme": load_audio_resource("res://assets/audio/cutscenes/bijapur_court_theme.ogg"),
+		"temple_destruction_theme": load_audio_resource("res://assets/audio/cutscenes/temple_destruction_theme.ogg"),
+		"rajgad_fort_theme": load_audio_resource("res://assets/audio/cutscenes/rajgad_fort_theme.ogg")
 	}
 	
 	# Load SFX (will be populated when assets are available)
 	sfx_sounds = {
 		"menu_select": null, # load("res://assets/audio/sfx/menu_select.wav"),
+		"jump": null, # load("res://assets/audio/sfx/jump.wav"),
+		"land": null, # load("res://assets/audio/sfx/land.wav"),
 		"footsteps": null, # load("res://assets/audio/sfx/footsteps.wav"),
+		"climb_grab": null, # load("res://assets/audio/sfx/climb_grab.wav"),
+		"climb_up": null, # load("res://assets/audio/sfx/climb_up.wav"),
+		"interact": null, # load("res://assets/audio/sfx/interact.wav"),
 		"sword_clash": null, # load("res://assets/audio/sfx/sword_clash.wav"),
 		"waagh_nakha_strike": null, # load("res://assets/audio/sfx/waagh_nakha.wav"),
 		"trumpet_signal": null, # load("res://assets/audio/sfx/trumpet.wav"),
@@ -56,7 +65,7 @@ func load_audio_resources():
 	
 	print("Audio resources initialized (assets to be loaded later)")
 	
-func play_music(track_name: String, fade_in: bool = true):
+func play_music(track_name: String, fade_in: bool = true, volume_modifier: float = 1.0):
 	if current_music == track_name:
 		return
 		
@@ -69,10 +78,15 @@ func play_music(track_name: String, fade_in: bool = true):
 		music_player.play()
 		current_music = track_name
 		
+		# Apply volume modifier (e.g., 0.8 for 20% reduction)
+		var base_volume = linear_to_db(GameManager.game_settings.music_volume)
+		var modified_volume = base_volume + linear_to_db(volume_modifier)
+		music_player.volume_db = modified_volume
+		
 		if fade_in:
-			fade_in_music()
+			fade_in_music(modified_volume)
 			
-		print("Playing music: ", track_name)
+		print("Playing music: ", track_name, " at volume: ", modified_volume, "db (modifier: ", volume_modifier, ")")
 	else:
 		print("Music track not found or not loaded: ", track_name)
 		
@@ -80,10 +94,10 @@ func fade_out_current_music():
 	var tween = create_tween()
 	tween.tween_property(music_player, "volume_db", -80, music_fade_duration)
 	
-func fade_in_music():
+func fade_in_music(target_volume: float = 0.0):
 	music_player.volume_db = -80
 	var tween = create_tween()
-	tween.tween_property(music_player, "volume_db", 0, music_fade_duration)
+	tween.tween_property(music_player, "volume_db", target_volume, music_fade_duration)
 	
 func play_sfx(sound_name: String, volume_modifier: float = 1.0):
 	if sfx_sounds.has(sound_name) and sfx_sounds[sound_name] != null:

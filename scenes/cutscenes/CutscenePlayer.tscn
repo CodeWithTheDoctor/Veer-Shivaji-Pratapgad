@@ -1,13 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cutscene_player_scene"]
+[gd_scene load_steps=3 format=3 uid="uid://djrr5y70jxw4v"]
 
-[ext_resource type="Script" path="res://scripts/cutscenes/CutscenePlayer.gd" id="1_cutscene"]
-[ext_resource type="PackedScene" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="2_dialogue"]
+[ext_resource type="Script" uid="uid://1mn03leuele2" path="res://scripts/cutscenes/CutscenePlayer.gd" id="1_cutscene"]
+[ext_resource type="PackedScene" uid="uid://cnav6fk1vrvps" path="res://scenes/ui/dialogue/DialogueUI.tscn" id="2_dialogue"]
 
 [node name="CutscenePlayer" type="Control" groups=["cutscene_player"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_cutscene")
 
 [node name="Background" type="TextureRect" parent="."]
@@ -15,6 +17,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
 stretch_mode = 5
 
@@ -23,6 +27,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="LeftPortrait" type="TextureRect" parent="CharacterPortraits"]
 layout_mode = 0
@@ -43,16 +49,22 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="DialogueUI" parent="." instance=ExtResource("2_dialogue")]
+layout_mode = 1
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="FadeOverlay" type="ColorRect" parent="."]
+z_index = 100
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0, 0, 0, 1)
-z_index = 100
 
 [node name="SkipPrompt" type="Label" parent="."]
+z_index = 50
 layout_mode = 0
 anchor_left = 0.85
 anchor_top = 0.05
@@ -61,4 +73,3 @@ anchor_bottom = 0.1
 text = "Press ESC to skip"
 horizontal_alignment = 2
 vertical_alignment = 1
-z_index = 50 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://xqrbyiwht3e5"]
+[gd_scene load_steps=3 format=3 uid="uid://b8hjc6nvx8dlm"]
 
 [ext_resource type="Script" path="res://scripts/characters/Player.gd" id="1_vx8k4"]
 
@@ -13,7 +13,7 @@ offset_left = -16.0
 offset_top = -40.0
 offset_right = 16.0
 offset_bottom = 40.0
-color = Color(0.545098, 0.270588, 0.0745098, 1)
+color = Color(0.4, 0.6, 0.2, 1)
 
 [node name="Label" type="Label" parent="PlaceholderSprite"]
 layout_mode = 1
@@ -22,11 +22,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -10.0
-offset_right = 30.0
-offset_bottom = 10.0
+offset_left = -35.0
+offset_top = -12.0
+offset_right = 35.0
+offset_bottom = 12.0
 text = "MESSENGER"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 vertical_alignment = 1
 

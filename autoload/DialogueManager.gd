@@ -3,6 +3,7 @@ extends Node
 signal dialogue_started
 signal dialogue_ended
 signal dialogue_line_changed(speaker: String, text: String)
+signal speaker_changed(speaker_name: String)
 
 var dialogue_data: Dictionary = {}
 var current_dialogue: Array = []
@@ -14,25 +15,64 @@ func _ready():
 	
 func load_dialogue_data():
 	var file_path = "res://data/dialogue/dialogue_data.json"
-	if not FileAccess.file_exists(file_path):
-		print("Dialogue data file not found, creating placeholder")
-		create_placeholder_dialogue_data()
-		return
-		
-	var file = FileAccess.open(file_path, FileAccess.READ)
-	if file:
-		var json_string = file.get_as_text()
-		var json = JSON.new()
-		var parse_result = json.parse(json_string)
-		if parse_result == OK:
-			dialogue_data = json.data
-			print("Dialogue data loaded successfully")
+	if FileAccess.file_exists(file_path):
+		var file = FileAccess.open(file_path, FileAccess.READ)
+		if file:
+			var json_string = file.get_as_text()
+			file.close()
+			
+			var json = JSON.new()
+			var parse_result = json.parse(json_string)
+			
+			if parse_result == OK:
+				dialogue_data = json.get_data()
+				print("Dialogue data loaded from JSON: ", dialogue_data.keys().size(), " dialogues")
+				
+				# Add missing placeholder dialogues for NPCs
+				if not dialogue_data.has("villager_fear"):
+					dialogue_data["villager_fear"] = [
+						{
+							"speaker": "Worried Villager",
+							"text": "The giant from Bijapur comes with fire and sword! Have you heard the terrible news?"
+						},
+						{
+							"speaker": "Worried Villager", 
+							"text": "They say Afzal Khan destroys everything in his path. Our temples... our people... nothing is safe!"
+						}
+					]
+				
+				if not dialogue_data.has("priest_temples"):
+					dialogue_data["priest_temples"] = [
+						{
+							"speaker": "Village Priest",
+							"text": "Young messenger, tell Shivaji Maharaj that our temples burn. Only he can save our dharma."
+						},
+						{
+							"speaker": "Village Priest",
+							"text": "The destroyer of deities comes with an army of 20,000. But we have faith in our protector."
+						}
+					]
+				
+				if not dialogue_data.has("shivaji_receives_news"):
+					dialogue_data["shivaji_receives_news"] = [
+						{
+							"speaker": "Messenger",
+							"text": "Shivaji Maharaj, I bring urgent news from the villages!"
+						}
+					]
+				
+				print("Added missing NPC dialogues for Level 1")
+				return true
+			else:
+				print("Error parsing dialogue JSON: ", json.error_string)
 		else:
-			print("Failed to parse dialogue data")
-		file.close()
+			print("Could not open dialogue file: ", file_path)
 	else:
-		print("Failed to open dialogue data file")
-		create_placeholder_dialogue_data()
+		print("Dialogue file not found: ", file_path)
+	
+	# Fallback to placeholder data
+	create_placeholder_dialogue_data()
+	return false
 
 func create_placeholder_dialogue_data():
 	# Create dialogue data for Level 1 story beats
@@ -126,6 +166,7 @@ func show_current_line():
 	if current_line < current_dialogue.size():
 		var line_data = current_dialogue[current_line]
 		dialogue_line_changed.emit(line_data.speaker, line_data.text)
+		speaker_changed.emit(line_data.speaker)
 		
 		# Play voice if available
 		if line_data.has("voice_file") and line_data.voice_file != "":
@@ -138,11 +179,12 @@ func end_dialogue():
 	dialogue_ended.emit()
 	print("Dialogue ended")
 	
-func _input(event):
+func _unhandled_input(event):
 	if is_dialogue_active:
 		# Both E and Space advance dialogue when dialogue is active
 		if event.is_action_pressed("interact") or event.is_action_pressed("jump"):
 			next_line()
+			get_viewport().set_input_as_handled()  # Prevent further processing
 
 func skip_dialogue():
 	if is_dialogue_active:

@@ -23,18 +23,28 @@ func _ready():
 	print("DialogueUI initialized")
 
 func setup_font_sizes():
-	# Increase font sizes for better readability
+	# Enhanced font sizes for better readability and visual impact
 	if speaker_label:
-		speaker_label.add_theme_font_size_override("font_size", 22)
-		speaker_label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.3, 1.0))  # Golden color
+		speaker_label.add_theme_font_size_override("font_size", 28)  # Increased from 22
+		speaker_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2, 1.0))  # Brighter golden
+		# Add shadow for better contrast
+		speaker_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.8))
+		speaker_label.add_theme_constant_override("shadow_offset_x", 2)
+		speaker_label.add_theme_constant_override("shadow_offset_y", 2)
 	
 	if dialogue_text:
-		dialogue_text.add_theme_font_size_override("normal_font_size", 18)
-		dialogue_text.add_theme_color_override("default_color", Color(0.95, 0.95, 0.95, 1.0))  # Light gray
+		dialogue_text.add_theme_font_size_override("normal_font_size", 22)  # Increased from 18
+		dialogue_text.add_theme_color_override("default_color", Color(0.98, 0.98, 0.98, 1.0))  # Pure white
+		# Add subtle shadow for readability
+		dialogue_text.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.6))
+		dialogue_text.add_theme_constant_override("shadow_offset_x", 1)
+		dialogue_text.add_theme_constant_override("shadow_offset_y", 1)
 	
 	if continue_hint:
-		continue_hint.add_theme_font_size_override("font_size", 14)
-		continue_hint.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 1.0))  # Dimmed
+		continue_hint.add_theme_font_size_override("font_size", 16)  # Increased from 14
+		continue_hint.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8, 1.0))  # Brighter gray
+		
+	print("Enhanced typography applied to dialogue UI")
 
 func _on_dialogue_started():
 	show_dialogue_ui()
